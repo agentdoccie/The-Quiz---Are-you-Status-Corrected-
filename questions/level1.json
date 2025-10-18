@@ -1,0 +1,117 @@
+{
+  "level": 1,
+  "title": "Fundamentals of the South African Assembly",
+  "passingScore": 70,
+  "questions": [
+    {
+      "question": "What is the primary mission of The South African Assembly (TSAA)?",
+      "options": [
+        "To form a new political party to contest elections",
+        "To replace the current Republic’s constitution",
+        "To act as a private financial trust for members",
+        "To reconstruct lawful self-governance under Common Law"
+      ],
+      "correctIndex": 3,
+      "topic": "Mission & Purpose"
+    },
+    {
+      "question": "According to TSAA, what is the main problem the Assembly seeks to correct?",
+      "options": [
+        "Unregistered business entities",
+        "Misidentification of living people as corporate persons",
+        "Lack of foreign investment",
+        "Insufficient parliamentary representation"
+      ],
+      "correctIndex": 1,
+      "topic": "Purpose & Identity"
+    },
+    {
+      "question": "What does “land-and-soil jurisdiction” represent in TSAA teachings?",
+      "options": [
+        "An ecological conservation area",
+        "A division of the South African courts system",
+        "The lawful realm of living men and women under Common Law",
+        "The maritime domain used for international trade"
+      ],
+      "correctIndex": 2,
+      "topic": "Jurisdiction"
+    },
+    {
+      "question": "Which statement best describes the difference between lawful and legal systems?",
+      "options": [
+        "Legal law is superior to lawful law",
+        "They are the same and used interchangeably",
+        "Lawful applies only to religious organizations",
+        "Lawful is based on natural moral law, while legal is corporate statutory law"
+      ],
+      "correctIndex": 3,
+      "topic": "Lawful vs Legal"
+    },
+    {
+      "question": "What does “status correction” achieve for a member of the Assembly?",
+      "options": [
+        "It changes one’s tax registration number",
+        "It converts a business into a non-profit organization",
+        "It restores one’s standing as a living man or woman on the land and soil",
+        "It renounces citizenship and residency rights"
+      ],
+      "correctIndex": 2,
+      "topic": "Status Correction"
+    },
+    {
+      "question": "What is the role of the Land Recording Office (LRO) within TSAA?",
+      "options": [
+        "To collect property tax on behalf of the state",
+        "To record lawful declarations and public notices for Assembly members",
+        "To manage electronic voting for the Assembly",
+        "To register corporate business licenses"
+      ],
+      "correctIndex": 1,
+      "topic": "Land Recording Office"
+    },
+    {
+      "question": "In TSAA teachings, what is the “strawman”?",
+      "options": [
+        "A nickname for Assembly peacekeepers",
+        "A fictional corporate identity created through birth registration",
+        "A symbol of agricultural abundance",
+        "A legal representative appointed by the state"
+      ],
+      "correctIndex": 1,
+      "topic": "Strawman Concept"
+    },
+    {
+      "question": "According to Common Law as described by TSAA, when does a crime exist?",
+      "options": [
+        "When a government official issues a fine",
+        "Only when there is a victim who suffers harm or loss",
+        "Whenever a contract is breached",
+        "Whenever someone violates a statutory rule"
+      ],
+      "correctIndex": 1,
+      "topic": "Common Law Principles"
+    },
+    {
+      "question": "Which of the following best expresses the Assembly’s philosophy of governance?",
+      "options": [
+        "Delegation of power to foreign trustees",
+        "Rule by corporate administration for profit",
+        "Enforcement through military authority",
+        "Peaceable self-governance by the people under Common Law"
+      ],
+      "correctIndex": 3,
+      "topic": "Governance Philosophy"
+    },
+    {
+      "question": "What core values does TSAA associate with true law under land and soil jurisdiction?",
+      "options": [
+        "Fear and control",
+        "Profit and expansion",
+        "Obedience and punishment",
+        "Love and gratitude"
+      ],
+      "correctIndex": 3,
+      "topic": "Values & Principles"
+    }
+  ]
+}
