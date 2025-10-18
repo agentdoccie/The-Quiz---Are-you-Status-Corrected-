@@ -1,27 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><link rel="stylesheet" href="styles/style.css">
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TSAA Knowledge Quiz</title>
+  
+  <!-- Link to your external CSS file -->
+  <link rel="stylesheet" href="styles/style.css">
+
+  <!-- Optional inline styles for layout -->
   <style>
-    body {<h1>South African Assembly Knowledge Quiz</h1>
-<h2 id="levelTitle"></h2>
-
-<!-- Progress bar -->
-<div id="progress">
-  <div id="progressBar"></div>
-</div>
-
-<!-- Where questions appear -->
-<div id="quiz"></div>
-
-<!-- The control buttons -->
-<button id="nextBtn">Next</button>
-<button id="restartBtn" class="hidden">Restart</button>
-
-<!-- Where results appear -->
-<div id="result" class="hidden"></div>
+    body {
       font-family: 'Segoe UI', Arial, sans-serif;
       background: #f2f5f2;
       color: #222;
@@ -41,26 +30,7 @@
       max-width: 700px;
       padding: 20px 30px;
     }
-    h1 {
-      text-align: center;
-      color: #0b6b38;
-    }
-    .question {
-      margin-bottom: 20px;
-    }
-    .option {
-      display: block;
-      padding: 10px;
-      margin: 8px 0;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      cursor: pointer;
-      background: #fff;
-      transition: all 0.3s;
-    }
-    .option:hover {
-      background: #eaf8f0;
-    }
+    .hidden { display: none; }
     #progress {
       background: #d8f0de;
       border-radius: 10px;
@@ -74,190 +44,43 @@
       width: 0%;
       transition: width 0.4s ease;
     }
-    #nextBtn, #restartBtn, #downloadBtn {
+    button {
       background: #0b6b38;
       color: white;
-      padding: 10px 20px;
       border: none;
       border-radius: 6px;
+      padding: 10px 20px;
       cursor: pointer;
       margin: 10px 5px 0 0;
     }
-    #nextBtn:hover, #restartBtn:hover, #downloadBtn:hover {
+    button:hover {
       background: #09552e;
     }
-    #result {
-      margin-top: 20px;
-      padding: 20px;
-      border-radius: 8px;
-    }
-    .hidden { display: none; }
   </style>
 </head>
+
 <body>
   <div id="container">
     <h1>South African Assembly Knowledge Quiz</h1>
-    <div id="progress"><div id="progressBar"></div></div>
+    <h2 id="levelTitle"></h2>
+
+    <!-- Progress bar -->
+    <div id="progress">
+      <div id="progressBar"></div>
+    </div>
+
+    <!-- Where questions appear -->
     <div id="quiz"></div>
+
+    <!-- The control buttons -->
     <button id="nextBtn">Next</button>
     <button id="restartBtn" class="hidden">Restart</button>
-    <button id="downloadBtn" class="hidden">Download Results</button>
+
+    <!-- Where results appear -->
     <div id="result" class="hidden"></div>
   </div>
 
-  <script>
-    const quizData = [
-      {q:"What is the primary mission of The South African Assembly (TSAA)?",
-       options:["To campaign for new political parties",
-                "To reconstruct lawful self-governance under Common Law",
-                "To expand South Africa’s corporate governance model",
-                "To operate as a private investment group"],
-       correct:1},
-      {q:"According to TSAA, what does 'land and soil jurisdiction' represent?",
-       options:["The maritime domain of corporate trade",
-                "The spiritual jurisdiction of belief and intent",
-                "The lawful realm of living men and women",
-                "The area reserved for government land"],
-       correct:2},
-      {q:"What is the purpose of status correction in TSAA teachings?",
-       options:["To change one’s voting registration",
-                "To correct misidentification as a corporate 'person' and reclaim natural status",
-                "To obtain a new driver’s license",
-                "To register as a political candidate"],
-       correct:1},
-      {q:"Which of the following is NOT one of TSAA’s lawful templates?",
-       options:["Common Carry Declaration",
-                "Solemn Record and Proclamation of Lawful Marriage",
-                "Corporate Tax Registration Form",
-                "Deed of Re-Conveyance"],
-       correct:2},
-      {q:"What does 'reconveyance' mean in TSAA law?",
-       options:["Selling a piece of land",
-                "Returning one’s name and estate from corporate to land jurisdiction",
-                "Transferring citizenship to another country",
-                "Filing a new birth certificate"],
-       correct:1},
-      {q:"The TSAA identifies three main jurisdictions represented by L-A-W. What do they stand for?",
-       options:["Law, Authority, Wisdom",
-                "Land, Air, Water",
-                "Liberty, Agreement, Wealth",
-                "Labor, Administration, Wills"],
-       correct:1},
-      {q:"What does the Deed of Land Recording accomplish?",
-       options:["Registers property under the federal cadastral system",
-                "Records lawful birth or ownership on the land and soil jurisdiction",
-                "Transfers ownership to the state",
-                "Creates a corporate mortgage"],
-       correct:1},
-      {q:"According to TSAA, the 'strawman' represents:",
-       options:["A farming profession",
-                "A legal fiction or corporate identity created at birth",
-                "A lawful family name",
-                "A type of Common Law peacekeeper"],
-       correct:1},
-      {q:"What is the relationship between 'lawful' and 'legal' in TSAA teaching?",
-       options:["They are identical terms",
-                "Lawful reflects moral and natural law; legal refers to corporate statutes",
-                "Legal is superior to lawful",
-                "Both are spiritual concepts only"],
-       correct:1},
-      {q:"What principle underlies TSAA’s approach to governance?",
-       options:["Peaceable self-governance by living people under Common Law",
-                "Political revolution against government",
-                "Military enforcement of lawful rights",
-                "Corporate law reform via taxation"],
-       correct:0}
-    ];
-
-    // Randomize order
-    const randomizedQuiz = quizData.sort(() => Math.random() - 0.5);
-    let current = 0;
-    let score = 0;
-    const quiz = document.getElementById("quiz");
-    const nextBtn = document.getElementById("nextBtn");
-    const restartBtn = document.getElementById("restartBtn");
-    const downloadBtn = document.getElementById("downloadBtn");
-    const result = document.getElementById("result");
-    const progressBar = document.getElementById("progressBar");
-
-    function loadQuestion() {
-      const qData = randomizedQuiz[current];
-      progressBar.style.width = ((current) / randomizedQuiz.length) * 100 + "%";
-      quiz.innerHTML = `<div class="question"><h3>Question ${current + 1} of ${randomizedQuiz.length}</h3><p>${qData.q}</p></div>`;
-      qData.options.forEach((opt, i) => {
-        const btn = document.createElement("button");
-        btn.textContent = opt;
-        btn.classList.add("option");
-        btn.addEventListener("click", () => selectAnswer(i, btn));
-        quiz.appendChild(btn);
-      });
-      nextBtn.disabled = true;
-    }
-
-    function selectAnswer(i, btn) {
-      randomizedQuiz[current].selected = i;
-      nextBtn.disabled = false;
-      document.querySelectorAll(".option").forEach(opt => opt.style.background = "#fff");
-      btn.style.background = "#c4eec7";
-    }
-
-    nextBtn.addEventListener("click", () => {
-      if (randomizedQuiz[current].selected === randomizedQuiz[current].correct) score++;
-      current++;
-      if (current < randomizedQuiz.length) loadQuestion();
-      else showResults();
-    });
-
-    function showResults() {
-      progressBar.style.width = "100%";
-      quiz.classList.add("hidden");
-      nextBtn.classList.add("hidden");
-      restartBtn.classList.remove("hidden");
-      downloadBtn.classList.remove("hidden");
-
-      const percentage = (score / randomizedQuiz.length) * 100;
-      const color = percentage >= 80 ? "#c7f2c4" : percentage >= 50 ? "#fff4c2" : "#f2c4c4";
-      result.style.background = color;
-      result.classList.remove("hidden");
-
-      let review = randomizedQuiz.map((q, i) => {
-        const userAns = q.options[q.selected];
-        const correctAns = q.options[q.correct];
-        const mark = q.selected === q.correct ? "✅" : "❌";
-        return `<p><strong>Q${i+1}:</strong> ${q.q}<br>${mark} Your answer: ${userAns || "None"}<br>✅ Correct: ${correctAns}</p>`;
-      }).join("<hr>");
-
-      result.innerHTML = `<h2>Your Score: ${score}/${randomizedQuiz.length} (${Math.round(percentage)}%)</h2>${review}`;
-    }
-
-    restartBtn.addEventListener("click", () => {
-      current = 0;
-      score = 0;
-      result.classList.add("hidden");
-      restartBtn.classList.add("hidden");
-      downloadBtn.classList.add("hidden");
-      quiz.classList.remove("hidden");
-      nextBtn.classList.remove("hidden");
-      randomizedQuiz.sort(() => Math.random() - 0.5);
-      loadQuestion();
-    });
-
-    downloadBtn.addEventListener("click", () => {
-      let text = `South African Assembly Knowledge Quiz\nScore: ${score}/${randomizedQuiz.length}\n\n`;
-      randomizedQuiz.forEach((q, i) => {
-        const userAns = q.options[q.selected];
-        const correctAns = q.options[q.correct];
-        const mark = q.selected === q.correct ? "✅" : "❌";
-        text += `Q${i+1}: ${q.q}\n${mark} Your: ${userAns}\nCorrect: ${correctAns}\n\n`;
-      });
-      const blob = new Blob([text], { type: "text/plain" });
-      const a = document.createElement("a");
-      a.href = URL.createObjectURL(blob);
-      a.download = "TSAA_Quiz_Results.txt";
-      a.click();
-    });
-
-    loadQuestion();
-  </script>
+  <!-- Link to your JavaScript quiz logic -->
+  <script src="scripts/quiz.js"></script>
 </body>
 </html>
