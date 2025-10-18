@@ -1,0 +1,119 @@
+/* =======================================
+   TSAA Knowledge Quiz — Official Styling
+   ======================================= */
+
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background-color: #f5f9fc; /* soft blue-white background */
+  color: #1e2a38;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+}
+
+#container {
+  background: #ffffff;
+  margin-top: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 720px;
+  padding: 25px 35px;
+  text-align: center;
+}
+
+h1 {
+  color: #003366; /* TSAA deep blue */
+  margin-bottom: 10px;
+  font-size: 1.8em;
+  letter-spacing: 0.5px;
+}
+
+h2#levelTitle {
+  color: #0073aa;
+  font-weight: 500;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+#progress {
+  background: #d6eaf8;
+  border-radius: 10px;
+  overflow: hidden;
+  height: 14px;
+  margin-bottom: 25px;
+}
+
+#progressBar {
+  background: #0073aa; /* TSAA blue */
+  height: 100%;
+  width: 0%;
+  transition: width 0.4s ease;
+}
+
+.question {
+  margin-bottom: 20px;
+}
+
+button.option {
+  display: block;
+  width: 100%;
+  background: #f9fcff;
+  border: 1px solid #0073aa;
+  border-radius: 8px;
+  color: #003366;
+  font-size: 1em;
+  padding: 10px;
+  margin: 8px 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+button.option:hover {
+  background: #0073aa;
+  color: white;
+}
+
+#nextBtn,
+#restartBtn {
+  background: #0073aa;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 24px;
+  cursor: pointer;
+  font-size: 1em;
+  margin: 15px 5px 0 5px;
+  transition: background 0.3s ease;
+}
+
+#nextBtn:hover,
+#restartBtn:hover {
+  background: #005f87;
+}
+
+#result {
+  background: #f0f8ff;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 20px;
+  border: 1px solid #b0d4e3;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  #container {
+    width: 95%;
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 1.4em;
+  }
+}
