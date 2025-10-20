@@ -1,0 +1,108 @@
+{
+  "level": 4,
+  "title": "Political Status and Standing",
+  "summary": "Level 4 focuses on reclaiming your political status and lawful standing — understanding how identity, citizenship, and jurisdiction define your relationship to government. You will learn what it means to stand on the land and soil as a living man or woman, and how corporate fictions have replaced that status through registration and presumption.",
+
+  "questions": [
+    {
+      "question": "In the TSAA framework, what does 'political status' mean?",
+      "options": [
+        "Your voting preference or party membership",
+        "Your legal classification and relationship to government",
+        "Your nationality based on birthplace",
+        "Your profession or social title"
+      ],
+      "correctIndex": 1
+    },
+    {
+      "question": "Why is political status important under lawful self-governance?",
+      "options": [
+        "Because it determines which taxes apply to you",
+        "Because it defines whether you are acting as a corporate person or a living being",
+        "Because it allows you to access international trade benefits",
+        "Because it changes your religious affiliation"
+      ],
+      "correctIndex": 1
+    },
+    {
+      "question": "What happens when a birth is 'registered' with the state?",
+      "options": [
+        "The child is recognized as a living heir to the land",
+        "A corporate entity or 'person' is created in commerce",
+        "The government provides lawful protection only",
+        "Nothing — registration has no legal effect"
+      ],
+      "correctIndex": 1
+    },
+    {
+      "question": "According to TSAA, what is the effect of reclaiming your political status?",
+      "options": [
+        "You become immune from all laws",
+        "You stand again as a living man or woman under the land jurisdiction",
+        "You lose all government privileges",
+        "You gain access to maritime commerce"
+      ],
+      "correctIndex": 1
+    },
+    {
+      "question": "What lawful document records your return to the land and soil jurisdiction?",
+      "options": [
+        "Marriage Certificate",
+        "Voter Registration",
+        "Deed of Re-Conveyance",
+        "Social Security Contract"
+      ],
+      "correctIndex": 2
+    },
+    {
+      "question": "What does 'standing on the land' represent in lawful terms?",
+      "options": [
+        "Owning property under a corporate title",
+        "Living peacefully under public law with natural rights intact",
+        "Operating as a registered franchise",
+        "Declaring yourself a citizen of a corporation"
+      ],
+      "correctIndex": 1
+    },
+    {
+      "question": "Why is 'citizenship' considered a voluntary corporate status?",
+      "options": [
+        "Because it identifies you as an employee or subject of a corporation",
+        "Because it is based purely on birthright",
+        "Because all people must have one to exist lawfully",
+        "Because it is automatically given by God"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "question": "In the lawful system, how is authority expressed?",
+      "options": [
+        "By consent and contract between equals",
+        "Through mandatory government policy",
+        "By majority rule in elections",
+        "Through international treaties only"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "question": "What process allows a man or woman to correct misidentification in records?",
+      "options": [
+        "Filing a Deed of Re-Conveyance and related status correction documents",
+        "Applying for a new driver’s license",
+        "Signing a government employment contract",
+        "Paying a registration renewal fee"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "question": "According to TSAA, lawful standing is proven by:",
+      "options": [
+        "Being recognized by a foreign court",
+        "Having a valid passport",
+        "Publicly recording your political status on the land and soil",
+        "Declaring allegiance to the state"
+      ],
+      "correctIndex": 2
+    }
+  ]
+}
