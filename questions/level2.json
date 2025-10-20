@@ -1,8 +1,8 @@
 {
   "level": 2,
   "title": "Jurisdictions and Law",
-  "summary": "Level 2 explores the lawful, legal, and spiritual jurisdictions that govern our world — air, land, and sea — and how corporate systems extended maritime authority onto the land. You will learn how Common Law differs from statutory law, what legal fictions are, and how to recognize true Public Law.",
-  "passingScore": 70,
+  "summary": "This level tests your understanding of the three primary jurisdictions — air, land, and sea — and how they relate to lawful and legal systems. You’ll also explore how these jurisdictions define authority, responsibility, and sovereignty under TSAA principles.",
+
   "questions": [
     {
       "question": "How many primary jurisdictions does TSAA recognize as operating on Earth?",
@@ -12,107 +12,97 @@
         "Two — land and maritime",
         "Four — land, sea, air, and digital"
       ],
-      "correctIndex": 1,
-      "topic": "Jurisdictions"
+      "correctIndex": 1
     },
     {
-      "question": "Which jurisdiction applies to the living men and women on the land and soil?",
+      "question": "Which jurisdiction is associated with commerce and the law of the sea?",
       "options": [
         "Air jurisdiction",
-        "Maritime jurisdiction",
-        "Land and soil jurisdiction",
-        "Admiralty jurisdiction"
+        "Land jurisdiction",
+        "Sea jurisdiction",
+        "Sovereign jurisdiction"
       ],
-      "correctIndex": 2,
-      "topic": "Land and Soil Jurisdiction"
+      "correctIndex": 2
     },
     {
-      "question": "What does “Admiralty Law” primarily govern according to TSAA teachings?",
+      "question": "Which jurisdiction is where the living people and common law exist?",
       "options": [
-        "The moral conduct of individuals",
-        "Contracts and commerce between vessels and corporations",
-        "The land-based activities of farmers and property owners",
-        "The rights of indigenous communities"
+        "Land jurisdiction",
+        "Sea jurisdiction",
+        "Air jurisdiction",
+        "Corporate jurisdiction"
       ],
-      "correctIndex": 1,
-      "topic": "Admiralty Law"
+      "correctIndex": 0
     },
     {
-      "question": "What event allowed corporate governments to extend maritime jurisdiction onto the land unlawfully?",
+      "question": "The jurisdiction of the air is primarily associated with:",
       "options": [
-        "The registration of all living births as “persons”",
-        "The invention of the internet",
-        "The adoption of the Gregorian calendar",
-        "The Declaration of Independence"
+        "Spiritual matters and ecclesiastical authority",
+        "Land ownership and property rights",
+        "Commercial shipping and trade",
+        "Military law and discipline"
       ],
-      "correctIndex": 0,
-      "topic": "Corporate Jurisdiction Expansion"
+      "correctIndex": 0
     },
     {
-      "question": "What is the proper jurisdiction for enforcing Public Law?",
+      "question": "Which jurisdiction governs incorporated legal fictions like corporations?",
       "options": [
-        "Land and soil jurisdiction under Common Law",
-        "Maritime commercial jurisdiction",
-        "Ecclesiastical (Church) jurisdiction",
-        "Air jurisdiction under canon law"
+        "Lawful land jurisdiction",
+        "Sea or maritime jurisdiction",
+        "Ecclesiastical air jurisdiction",
+        "Unincorporated natural jurisdiction"
       ],
-      "correctIndex": 0,
-      "topic": "Public Law"
+      "correctIndex": 1
     },
     {
-      "question": "What is the primary difference between statutory law and common law?",
+      "question": "In the TSAA framework, 'lawful' refers to:",
       "options": [
-        "Statutory law applies only to foreigners",
-        "Common law is natural and moral; statutory law is corporate and written",
-        "Common law is used in banking; statutory law is used in trade",
-        "They are two names for the same system"
+        "Government statutes and corporate codes",
+        "The moral law of the living under common law",
+        "International admiralty regulations",
+        "Laws passed by parliament or legislature"
       ],
-      "correctIndex": 1,
-      "topic": "Law Types"
+      "correctIndex": 1
     },
     {
-      "question": "According to TSAA, what does the term “Legal Fiction” refer to?",
+      "question": "In contrast to 'lawful', the term 'legal' refers to:",
       "options": [
-        "A metaphor for imaginary stories",
-        "A corporate entity or person created on paper",
-        "A fabricated legal case",
-        "A law that has not yet been published"
+        "Rules applying only to living men and women",
+        "Corporate policies and statutory systems",
+        "The moral laws of nature",
+        "Sovereign natural law only"
       ],
-      "correctIndex": 1,
-      "topic": "Legal Fictions"
+      "correctIndex": 1
     },
     {
-      "question": "Why do lawful people reject the title “citizen” in Assembly context?",
+      "question": "Under TSAA teachings, which jurisdiction is said to be 'foreign' to living men and women?",
       "options": [
-        "Because it implies voluntary political allegiance to a corporate state",
-        "Because it’s a religious designation",
-        "Because it refers to ancient Roman slaves",
-        "Because it has no meaning under Common Law"
+        "Land jurisdiction",
+        "Sea jurisdiction",
+        "Air jurisdiction",
+        "Public jurisdiction"
       ],
-      "correctIndex": 0,
-      "topic": "Political Status"
+      "correctIndex": 1
     },
     {
-      "question": "What document process reclaims a person’s lawful standing from corporate jurisdiction?",
+      "question": "In the lawful system, authority flows from:",
       "options": [
-        "Deed of Re-Conveyance",
-        "Birth Certificate Renewal",
-        "Passport Application",
-        "Electoral Registration Form"
+        "Statutes and corporate charters",
+        "The consent of the governed and natural law",
+        "International courts and judges",
+        "Religious institutions and clergy"
       ],
-      "correctIndex": 0,
-      "topic": "Lawful Process"
+      "correctIndex": 1
     },
     {
-      "question": "Under lawful principles, what defines a valid crime?",
+      "question": "Why can’t air, land, and sea jurisdictions mix under lawful understanding?",
       "options": [
-        "A violation of statutory code",
-        "The existence of a living victim or measurable harm",
-        "A court’s accusation against a person",
-        "The issuance of a fine by a judge"
+        "Because they are controlled by different nations",
+        "Because each operates under different forms of law and authority",
+        "Because of historical conflicts between systems",
+        "Because trade routes are restricted"
       ],
-      "correctIndex": 1,
-      "topic": "Lawful Crimes"
+      "correctIndex": 1
     }
   ]
 }
