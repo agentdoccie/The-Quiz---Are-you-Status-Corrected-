@@ -1,0 +1,108 @@
+{
+  "level": 3,
+  "title": "Lawful vs Legal",
+  "summary": "Level 3 explores one of the most important foundations of TSAA teaching — the difference between Lawful and Legal. You will examine how natural law differs from statutory law, how moral conscience forms the true basis of justice, and how commercial systems have replaced living law with contracts.",
+
+  "questions": [
+    {
+      "question": "In the TSAA framework, what defines something as 'lawful'?",
+      "options": [
+        "It is based on moral conscience, natural rights, and living law.",
+        "It has been passed by a corporate legislature.",
+        "It is recognized by international courts.",
+        "It is enforced by police and government agencies."
+      ],
+      "correctIndex": 0
+    },
+    {
+      "question": "What defines something as 'legal' in contrast to 'lawful'?",
+      "options": [
+        "It applies only to spiritual law.",
+        "It refers to man-made corporate rules or statutes.",
+        "It represents divine moral truth.",
+        "It cannot be enforced by courts."
+      ],
+      "correctIndex": 1
+    },
+    {
+      "question": "Which law protects the natural rights of living men and women?",
+      "options": [
+        "Corporate Law",
+        "Statutory Law",
+        "Common Law (Law of the Land)",
+        "Maritime Law"
+      ],
+      "correctIndex": 2
+    },
+    {
+      "question": "In a legal system, 'persons' are treated as:",
+      "options": [
+        "Living men and women with natural rights",
+        "Corporate entities or fictions on paper",
+        "Sovereign people under God",
+        "Independent jurisdictions"
+      ],
+      "correctIndex": 1
+    },
+    {
+      "question": "What is the fundamental problem with legal systems according to TSAA?",
+      "options": [
+        "They rely on common sense instead of law books.",
+        "They mix land and sea jurisdictions unlawfully.",
+        "They substitute contracts and enforcement for moral law and consent.",
+        "They only apply to foreigners."
+      ],
+      "correctIndex": 2
+    },
+    {
+      "question": "Which of the following best describes Common Law?",
+      "options": [
+        "A living system of peacekeeping and restitution between equals",
+        "An international trade code for corporate nations",
+        "An ecclesiastical law governing spiritual matters",
+        "A military law system for defense operations"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "question": "In lawful conduct, an injury or harm must be proven because:",
+      "options": [
+        "Courts need to set monetary fines.",
+        "Only living people can commit crimes under law.",
+        "Lawful systems require evidence of a victim or loss.",
+        "Judges decide guilt based on policy."
+      ],
+      "correctIndex": 2
+    },
+    {
+      "question": "What is the true purpose of lawful courts under Common Law?",
+      "options": [
+        "To punish offenders and issue corporate penalties",
+        "To create new legal codes",
+        "To resolve disputes, provide remedy, and restore peace",
+        "To expand government jurisdiction"
+      ],
+      "correctIndex": 2
+    },
+    {
+      "question": "Which of the following statements is TRUE about legal systems?",
+      "options": [
+        "They are built on moral conscience and natural law.",
+        "They depend on contracts and presumed consent.",
+        "They are always subordinate to lawful courts.",
+        "They cannot operate outside the land jurisdiction."
+      ],
+      "correctIndex": 1
+    },
+    {
+      "question": "According to TSAA, the return to lawful governance begins when:",
+      "options": [
+        "People withdraw from corporate citizenship and reclaim their natural standing.",
+        "Judges rewrite commercial codes.",
+        "Governments pass new constitutional amendments.",
+        "Elections are held under maritime law."
+      ],
+      "correctIndex": 0
+    }
+  ]
+}
