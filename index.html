@@ -1,47 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Southern African Assembly Knowledge Quiz</title>
 
-  <!-- Link to external CSS file -->
-  <link rel="stylesheet" href="styles/style.css">
+  <!-- Link to external CSS -->
+  <link rel="stylesheet" href="styles/style.css" />
 
   <!-- Optional Favicon -->
-  <link rel="icon" href="images/southern-assembly-logo.png" type="image/png">
+  <link rel="icon" href="images/southern-assembly-logo.png" type="image/png" />
 </head>
 
 <body>
   <div id="container">
 
-    <!-- Official Southern African Assembly Header -->
+    <!-- ===== Header ===== -->
     <header id="tsaaHeader">
-      <img src="images/southern-assembly-logo.png" alt="Southern African Assembly Logo" id="tsaaLogo">
+      <img
+        src="images/southern-assembly-logo.png"
+        alt="Southern African Assembly Logo"
+        id="tsaaLogo"
+      />
       <h1>Southern African Assembly Knowledge Quiz</h1>
     </header>
 
-    <!-- Dynamic Level Title -->
-    <h2 id="levelTitle"></h2>
+    <!-- ===== Welcome Screen (asks for player name) ===== -->
+    <div id="welcomeScreen">
+      <h2>Welcome!</h2>
+      <p>Please enter your name to begin the quiz.</p>
+      <input type="text" id="playerNameInput" placeholder="Enter your name" />
+      <button id="startQuizBtn">Start Quiz</button>
+    </div>
 
-    <!-- Progress Bar -->
-    <div id="progress">
+    <!-- ===== Dynamic Level Title ===== -->
+    <h2 id="levelTitle" class="hidden"></h2>
+
+    <!-- ===== Progress Bar ===== -->
+    <div id="progress" class="hidden">
       <div id="progressBar"></div>
     </div>
 
-    <!-- Quiz Content -->
-    <div id="quiz"></div>
+    <!-- ===== Quiz Content ===== -->
+    <div id="quiz" class="hidden"></div>
 
-    <!-- Control Buttons -->
-<button id="nextBtn">Next</button>
-<button id="restartBtn" class="hidden">Restart</button>
-<button id="resetAllBtn">Restart Quiz</button>
+    <!-- ===== Control Buttons ===== -->
+    <div id="controlButtons">
+      <button id="nextBtn" class="hidden">Next</button>
+      <button id="restartBtn" class="hidden">Restart</button>
+      <button id="resetAllBtn">Restart Quiz</button>
+    </div>
 
-    <!-- Results Section -->
+    <!-- ===== Results Section ===== -->
     <div id="result" class="hidden"></div>
   </div>
 
-  <!-- JavaScript Quiz Logic -->
+  <!-- ===== JavaScript Logic ===== -->
   <script src="scripts/quiz.js"></script>
 </body>
 </html>
