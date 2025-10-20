@@ -3,15 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TSAA Knowledge Quiz</title>
-  
+  <title>Southern African Assembly Knowledge Quiz</title>
+
   <!-- Link to your external CSS file -->
   <link rel="stylesheet" href="styles/style.css">
 </head>
 
 <body>
   <div id="container">
-    <h1>South African Assembly Knowledge Quiz</h1>
+    <!-- Official Header -->
+    <header id="tsaaHeader">
+      <img src="images/southern-assembly-logo.png" alt="Southern African Assembly Logo" id="tsaaLogo">
+      <h1>Southern African Assembly Knowledge Quiz</h1>
+    </header>
+
+    <!-- Dynamic Level Title -->
     <h2 id="levelTitle"></h2>
 
     <!-- Progress bar -->
@@ -19,18 +25,18 @@
       <div id="progressBar"></div>
     </div>
 
-    <!-- Where questions appear -->
+    <!-- Quiz Area -->
     <div id="quiz"></div>
 
-    <!-- The control buttons -->
+    <!-- Control Buttons -->
     <button id="nextBtn">Next</button>
     <button id="restartBtn" class="hidden">Restart</button>
 
-    <!-- Where results appear -->
+    <!-- Result Display -->
     <div id="result" class="hidden"></div>
   </div>
 
-  <!-- Link to your JavaScript quiz logic -->
+  <!-- JavaScript logic -->
   <script src="scripts/quiz.js"></script>
 </body>
 </html>
