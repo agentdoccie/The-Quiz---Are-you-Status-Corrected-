@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
   loadLevel(currentLevel);
 });
 
-// --- Fetch the level JSON file ---
+// --- Fetch and load a level JSON file ---
 function loadLevel(level) {
   fetch(`questions/level${level}.json`)
     .then(res => {
@@ -34,26 +34,42 @@ function loadLevel(level) {
       levelData = data.questions;
       currentQuestion = 0;
       score = 0;
+
+      // Update the title bar
       levelTitle.innerHTML = `Level ${data.level}: ${data.title}`;
+
+      // Reset UI elements
       quizContainer.classList.remove("hidden");
-            resultContainer.classList.add("hidden");
+      resultContainer.classList.add("hidden");
       restartBtn.classList.add("hidden");
       nextBtn.classList.remove("hidden");
-        if (data.summary) {
-          progressBar.style.width = "0%"; // reset bar at start of each level
-    quizContainer.innerHTML = `
-      <div class="summary-card">
-        <h3>Level Overview</h3>
-        <p>${data.summary}</p>
-        <button id="startLevelBtn">Start Level ${data.level}</button>
-      </div>
-    `;
-    document.getElementById("startLevelBtn").addEventListener("click", () => {
-      loadQuestion();
-    });
-    nextBtn.classList.add("hidden");
-    return; // stops loading questions until user clicks Start
-  }
+      nextBtn.disabled = true; // reset state
+      progressBar.style.width = "0%";
+
+      // --- Handle Summary Card ---
+      if (data.summary) {
+        quizContainer.innerHTML = `
+          <div class="summary-card">
+            <h3>Level Overview</h3>
+            <p>${data.summary}</p>
+            <button id="startLevelBtn">Start Level ${data.level}</button>
+          </div>
+        `;
+
+        // Hide "Next" button until quiz starts
+        nextBtn.classList.add("hidden");
+
+        document
+          .getElementById("startLevelBtn")
+          .addEventListener("click", () => {
+            nextBtn.classList.remove("hidden");
+            loadQuestion();
+          });
+
+        return; // stop until "Start Level" clicked
+      }
+
+      // If no summary, load questions immediately
       loadQuestion();
     })
     .catch(err => {
@@ -116,17 +132,29 @@ function finishLevel() {
 
   let color = percent >= PASSING_SCORE ? "#d8f7d3" : "#f9d3d3";
   resultContainer.style.background = color;
+
+  let nextLevelBtn = "";
+  if (percent >= PASSING_SCORE && currentLevel < TOTAL_LEVELS) {
+    nextLevelBtn = `<button id="nextLevelBtn">Next Level</button>`;
+  }
+
   resultContainer.innerHTML = `
     <h2>Level ${currentLevel} Complete</h2>
     <h3>Your Score: ${score} / ${totalQuestions} (${Math.round(percent)}%)</h3>
     <p>${percent >= PASSING_SCORE 
       ? "🎉 Congratulations! You passed and unlocked the next level." 
       : "❌ You did not reach the passing score. Try again!"}</p>
+    ${nextLevelBtn}
   `;
 
+  // --- Handle next level progression ---
   if (percent >= PASSING_SCORE && currentLevel < TOTAL_LEVELS) {
-    currentLevel++;
-    localStorage.setItem("tsaaLevel", currentLevel);
+    const btn = document.getElementById("nextLevelBtn");
+    btn.addEventListener("click", () => {
+      currentLevel++;
+      localStorage.setItem("tsaaLevel", currentLevel);
+      loadLevel(currentLevel);
+    });
   }
 }
 
