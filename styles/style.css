@@ -1,6 +1,6 @@
 /* =======================================
    Southern African Assembly Knowledge Quiz
-   Official Visual Theme
+   Official Visual Theme (Optimized)
    ======================================= */
 
 /* General Page Layout */
@@ -28,46 +28,67 @@ body {
   text-align: center;
 }
 
-/* ===== Southern African Assembly Header ===== */
+/* ===== Southern African Assembly Header (Optimized) ===== */
 #tsaaHeader {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
   border-bottom: 2px solid #0073aa;
-  padding-bottom: 15px;
+  padding-bottom: 10px;
   text-align: center;
 }
 
+/* ✅ Optimized logo scaling with soft glow */
 #tsaaLogo {
-  width: 120px;
+  width: 90px;          /* Base logo size for desktop */
+  max-width: 90px;      /* Prevents oversized logo */
   height: auto;
   margin-bottom: 10px;
-  max-width: 80%;
+  object-fit: contain;
+  transition: all 0.4s ease;
+  opacity: 0.95;        /* 🔹 Optional soft transparency */
+  filter: drop-shadow(0 0 2px rgba(0, 115, 170, 0.3)); /* 🔹 Soft blue glow */
 }
 
 h1 {
-  font-size: 1.6em;
+  font-size: 1.5em;
   color: #003366;
   margin: 0;
 }
 
-/* Responsive resizing for desktop */
+/* Desktop layout (logo left of title) */
 @media (min-width: 600px) {
   #tsaaHeader {
     flex-direction: row;
     justify-content: center;
-    gap: 20px;
+    align-items: center;
+    gap: 15px;
   }
 
   #tsaaLogo {
-    width: 80px;
+    width: 65px;
+    max-width: 65px;
     margin-bottom: 0;
   }
 
   h1 {
-    font-size: 1.8em;
+    font-size: 1.6em;
+  }
+}
+
+/* Mobile layout (logo above title) */
+@media (max-width: 599px) {
+  #tsaaLogo {
+    width: 70px;        /* Compact logo for mobile */
+    max-width: 70px;
+    margin-bottom: 8px;
+  }
+
+  h1 {
+    font-size: 1.3em;
+    line-height: 1.2em;
   }
 }
 
@@ -165,6 +186,6 @@ button.option:hover {
   }
 
   #tsaaLogo {
-    width: 100px;
+    width: 80px;
   }
 }
