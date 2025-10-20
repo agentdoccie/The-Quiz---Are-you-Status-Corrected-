@@ -1,9 +1,10 @@
 // ===============================
 //  Southern African Assembly Knowledge Quiz
-//  (Save, Resume, Save & Exit + Return Home)
+//  (Save, Resume, Save & Exit + Themed Volunteer Modal)
 // ===============================
 
 const PASSING_SCORE = 70;
+const VOLUNTEER_TRIGGER = 80;
 const TOTAL_LEVELS = 5;
 let currentLevel = parseInt(localStorage.getItem("tsaaLevel")) || 1;
 let currentQuestion = parseInt(localStorage.getItem("tsaaQuestion")) || 0;
@@ -209,7 +210,7 @@ function saveProgress() {
   localStorage.setItem(`tsaaSelections_level${currentLevel}`, JSON.stringify(selections));
 }
 
-// --- Save & Exit (branded screen + Return Home) ---
+// --- Save & Exit ---
 function saveAndExit() {
   saveProgress();
 
@@ -221,7 +222,6 @@ function saveAndExit() {
       <p>Thank you, <strong>${playerName}</strong>.</p>
       <p>Your quiz progress has been securely saved.</p>
       <p>You may safely close this page now or return to the home screen below.</p>
-      <p style="font-size:0.9em; color:#444;">Your level and answers are automatically restored when you come back.</p>
       <button id="returnHomeBtn"
         style="background:#0073aa; color:white; border:none; border-radius:6px;
                padding:10px 24px; cursor:pointer; margin-top:20px; font-size:1em;">
@@ -232,9 +232,7 @@ function saveAndExit() {
     </div>
   `;
 
-  document.getElementById("returnHomeBtn").addEventListener("click", () => {
-    location.reload(); // reloads to welcome screen
-  });
+  document.getElementById("returnHomeBtn").addEventListener("click", () => location.reload());
 }
 
 // --- Next button ---
@@ -268,30 +266,18 @@ function finishLevel() {
   let color = percent >= PASSING_SCORE ? "#d8f7d3" : "#f9d3d3";
   resultContainer.style.background = color;
 
-  let feedback =
-    percent >= 90
-      ? `🌟 Outstanding work, ${playerName}! You’ve mastered this level.`
-      : percent >= 70
-      ? `✅ Great job, ${playerName}! You passed this level.`
-      : `⚠️ Keep studying, ${playerName} — try again soon.`;
-
-  const levelsCompleted = Object.keys(tsaaScores).length;
-  const total = Object.values(tsaaScores).reduce((a, b) => a + b, 0);
-  const avg = total / levelsCompleted;
-
   resultContainer.innerHTML = `
     <h2>Level ${currentLevel} Complete</h2>
     <h3>Your Score: ${score} / ${totalQuestions} (${Math.round(percent)}%)</h3>
-    <p>${feedback}</p>
-    <hr>
-    <p><strong>Levels Completed:</strong> ${levelsCompleted}</p>
-    <p><strong>Average Score:</strong> ${Math.round(avg)}%</p>
   `;
 
   updateProgressTracker();
 
+  if (percent >= VOLUNTEER_TRIGGER) showVolunteerModal();
+
   if (percent >= PASSING_SCORE && currentLevel < TOTAL_LEVELS) {
     resultContainer.innerHTML += `
+      <hr>
       <button id="nextLevelBtn">Next Level</button>
     `;
     document.getElementById("nextLevelBtn").addEventListener("click", () => {
@@ -307,7 +293,53 @@ function finishLevel() {
   localStorage.removeItem(`tsaaSelections_level${currentLevel}`);
 }
 
-// --- Restart Level ---
+// --- Volunteer Modal ---
+function showVolunteerModal() {
+  const modal = document.createElement("div");
+  modal.id = "volunteerModal";
+  Object.assign(modal.style, {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    background: "rgba(0,0,0,0.6)",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 9999
+  });
+
+  modal.innerHTML = `
+    <div style="background:white; border-radius:12px; padding:25px; width:90%; max-width:420px; text-align:center; box-shadow:0 4px 20px rgba(0,0,0,0.2); animation:fadeIn 0.4s ease;">
+      <img src="images/southern-assembly-logo.png" alt="Southern African Assembly Logo" style="width:70px; height:auto; margin-bottom:10px; opacity:0.95;">
+      <h3 style="color:#0073aa;">🎉 Wow, ${playerName}!</h3>
+      <p>You really understand all this.<br>Have you thought about being a volunteer for the Assembly?</p>
+      <div style="margin-top:15px;">
+        <button id="yesVolunteer" style="background:#0073aa; color:white; border:none; border-radius:6px; padding:10px 16px; margin:5px; cursor:pointer;">Yes, I'd like to help</button>
+        <button id="noVolunteer" style="background:#ccc; color:#333; border:none; border-radius:6px; padding:10px 16px; margin:5px; cursor:pointer;">No thanks</button>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+
+  document.getElementById("yesVolunteer").addEventListener("click", () => {
+    window.open("https://thesouthafricanassembly.org/contact-us/", "_blank");
+    closeModal();
+  });
+
+  document.getElementById("noVolunteer").addEventListener("click", () => {
+    alert("👍 Maybe in the future! Let’s hammer on and see what else you know! 😄");
+    closeModal();
+  });
+
+  function closeModal() {
+    modal.remove();
+  }
+}
+
+// --- Restart level ---
 restartBtn.addEventListener("click", () => {
   currentQuestion = 0;
   score = 0;
@@ -315,7 +347,7 @@ restartBtn.addEventListener("click", () => {
   loadLevel(currentLevel);
 });
 
-// --- Reset Quiz ---
+// --- Reset quiz ---
 resetAllBtn.addEventListener("click", () => {
   if (confirm("Are you sure you want to restart the entire quiz from Level 1?")) {
     localStorage.clear();
@@ -326,16 +358,13 @@ resetAllBtn.addEventListener("click", () => {
   }
 });
 
-// --- Progress Tracker ---
+// --- Progress tracker ---
 function updateProgressTracker() {
   const completion = ((currentLevel - 1) / TOTAL_LEVELS) * 100;
   progressTracker.textContent = `🧭 Level ${currentLevel} of ${TOTAL_LEVELS} — ${Math.round(completion)}% Complete`;
 
-  if (completion >= 100) {
-    progressTracker.classList.add("complete");
-  } else {
-    progressTracker.classList.remove("complete");
-  }
+  if (completion >= 100) progressTracker.classList.add("complete");
+  else progressTracker.classList.remove("complete");
 
   progressTracker.classList.remove("hidden");
 }
