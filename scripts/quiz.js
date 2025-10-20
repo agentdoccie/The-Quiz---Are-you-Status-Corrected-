@@ -1,6 +1,6 @@
 // ===============================
 //  Southern African Assembly Knowledge Quiz
-//  (with Save & Resume Support)
+//  (with Save, Resume & Save & Exit Support)
 // ===============================
 
 const PASSING_SCORE = 70;
@@ -35,6 +35,22 @@ const welcomeBackScreen = document.getElementById("welcomeBackScreen");
 const returningName = document.getElementById("returningName");
 const continueBtn = document.getElementById("continueBtn");
 const restartFromBeginningBtn = document.getElementById("restartFromBeginningBtn");
+
+// --- Create Save & Exit button dynamically ---
+const saveExitBtn = document.createElement("button");
+saveExitBtn.id = "saveExitBtn";
+saveExitBtn.textContent = "Save & Exit";
+saveExitBtn.style.background = "#ff9933";
+saveExitBtn.style.color = "white";
+saveExitBtn.style.border = "none";
+saveExitBtn.style.borderRadius = "6px";
+saveExitBtn.style.padding = "10px 24px";
+saveExitBtn.style.cursor = "pointer";
+saveExitBtn.style.margin = "15px 5px 0 5px";
+saveExitBtn.style.transition = "background 0.3s ease";
+saveExitBtn.addEventListener("mouseover", () => (saveExitBtn.style.background = "#e68a00"));
+saveExitBtn.addEventListener("mouseout", () => (saveExitBtn.style.background = "#ff9933"));
+saveExitBtn.addEventListener("click", saveAndExit);
 
 // --- Handle welcome + returning players ---
 document.addEventListener("DOMContentLoaded", () => {
@@ -89,6 +105,11 @@ function startQuiz(resume = false) {
   progressDiv.classList.remove("hidden");
   nextBtn.classList.remove("hidden");
 
+  // Add Save & Exit button next to Next
+  if (!document.getElementById("saveExitBtn")) {
+    nextBtn.insertAdjacentElement("afterend", saveExitBtn);
+  }
+
   loadLevel(currentLevel, resume);
 }
 
@@ -108,7 +129,6 @@ function loadLevel(level, resume = false) {
     .then(data => {
       levelData = data.questions;
 
-      // Restore saved selections if any
       const savedSelections = JSON.parse(localStorage.getItem(`tsaaSelections_level${level}`)) || [];
       levelData.forEach((q, i) => {
         q.selected = savedSelections[i] !== undefined ? savedSelections[i] : null;
@@ -125,16 +145,19 @@ function loadLevel(level, resume = false) {
           </div>
         `;
         nextBtn.classList.add("hidden");
+        saveExitBtn.classList.add("hidden");
         document.getElementById("startLevelBtn").addEventListener("click", () => {
           currentQuestion = 0;
           loadQuestion();
           nextBtn.classList.remove("hidden");
+          saveExitBtn.classList.remove("hidden");
         });
         return;
       }
 
       loadQuestion(resume);
       nextBtn.classList.remove("hidden");
+      saveExitBtn.classList.remove("hidden");
     })
     .catch(err => {
       quizContainer.innerHTML = `
@@ -162,10 +185,7 @@ function loadQuestion(resume = false) {
     btn.textContent = option;
     btn.classList.add("option");
 
-    // Highlight previously selected answers
-    if (q.selected === i) {
-      btn.style.background = "#c5f2cc";
-    }
+    if (q.selected === i) btn.style.background = "#c5f2cc";
 
     btn.addEventListener("click", () => selectAnswer(i, btn));
     quizContainer.appendChild(btn);
@@ -181,11 +201,10 @@ function selectAnswer(index, btn) {
   nextBtn.disabled = false;
   document.querySelectorAll(".option").forEach(opt => (opt.style.background = "#fff"));
   btn.style.background = "#c5f2cc";
-
   saveProgress();
 }
 
-// --- Save quiz progress to localStorage ---
+// --- Save progress ---
 function saveProgress() {
   localStorage.setItem("tsaaLevel", currentLevel);
   localStorage.setItem("tsaaQuestion", currentQuestion);
@@ -195,7 +214,18 @@ function saveProgress() {
   localStorage.setItem(`tsaaSelections_level${currentLevel}`, JSON.stringify(selections));
 }
 
-// --- Handle "Next" button ---
+// --- Save & Exit functionality ---
+function saveAndExit() {
+  saveProgress();
+  alert(`✅ Your progress has been saved, ${playerName}.\nYou can safely close this page and resume later.`);
+  document.getElementById("container").innerHTML = `
+    <h2 style="color:#0073aa;">Progress Saved!</h2>
+    <p>Thank you, ${playerName}. You can come back anytime to continue your quiz.</p>
+    <p style="font-size:0.9em; color:#444;">Close this tab or browser window now. Your progress is safely stored.</p>
+  `;
+}
+
+// --- Handle Next button ---
 nextBtn.addEventListener("click", () => {
   const current = levelData[currentQuestion];
   if (current.selected === current.correctIndex) score++;
@@ -210,7 +240,7 @@ nextBtn.addEventListener("click", () => {
   }
 });
 
-// --- Finish Level ---
+// --- Finish level ---
 function finishLevel() {
   progressBar.style.width = "100%";
   const totalQuestions = levelData.length;
@@ -224,6 +254,7 @@ function finishLevel() {
   nextBtn.classList.add("hidden");
   restartBtn.classList.remove("hidden");
   resultContainer.classList.remove("hidden");
+  saveExitBtn.classList.add("hidden");
 
   let color = percent >= PASSING_SCORE ? "#d8f7d3" : "#f9d3d3";
   resultContainer.style.background = color;
@@ -263,12 +294,11 @@ function finishLevel() {
     });
   }
 
-  // Clear question progress for finished level
   localStorage.removeItem("tsaaQuestion");
   localStorage.removeItem(`tsaaSelections_level${currentLevel}`);
 }
 
-// --- Restart Level ---
+// --- Restart level ---
 restartBtn.addEventListener("click", () => {
   currentQuestion = 0;
   score = 0;
@@ -276,7 +306,7 @@ restartBtn.addEventListener("click", () => {
   loadLevel(currentLevel);
 });
 
-// --- Reset Entire Quiz ---
+// --- Reset entire quiz ---
 resetAllBtn.addEventListener("click", () => {
   if (confirm("Are you sure you want to restart the entire quiz from Level 1?")) {
     localStorage.clear();
@@ -287,7 +317,7 @@ resetAllBtn.addEventListener("click", () => {
   }
 });
 
-// --- Update Progress Tracker ---
+// --- Progress tracker ---
 function updateProgressTracker() {
   const completion = ((currentLevel - 1) / TOTAL_LEVELS) * 100;
   progressTracker.textContent = `🧭 Level ${currentLevel} of ${TOTAL_LEVELS} — ${Math.round(completion)}% Complete`;
