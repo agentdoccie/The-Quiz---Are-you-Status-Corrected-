@@ -56,13 +56,13 @@ startQuizBtn.addEventListener("click", () => {
   startQuiz();
 });
 
-// --- Returning player continues from saved progress ---
+// --- Returning player continues ---
 continueBtn.addEventListener("click", () => {
   welcomeBackScreen.classList.add("hidden");
   startQuiz();
 });
 
-// --- Returning player restarts from Level 1 ---
+// --- Returning player restarts ---
 restartFromBeginningBtn.addEventListener("click", () => {
   if (confirm("Are you sure you want to start over from Level 1?")) {
     localStorage.clear();
@@ -79,3 +79,180 @@ function startQuiz() {
   nextBtn.classList.remove("hidden");
   loadLevel(currentLevel);
 }
+
+// --- Load a specific level ---
+function loadLevel(level) {
+  quizContainer.innerHTML = "";
+  resultContainer.classList.add("hidden");
+  restartBtn.classList.add("hidden");
+  nextBtn.classList.add("hidden");
+  progressBar.style.width = "0%";
+
+  fetch(`questions/level${level}.json`)
+    .then(res => {
+      if (!res.ok) throw new Error(`Level ${level} file not found`);
+      return res.json();
+    })
+    .then(data => {
+      levelData = data.questions;
+      currentQuestion = 0;
+      score = 0;
+      levelTitle.innerHTML = `Level ${data.level}: ${data.title}`;
+
+      if (data.summary) {
+        quizContainer.innerHTML = `
+          <div class="summary-card">
+            <h3>Hello ${playerName} 👋</h3>
+            <p>${data.summary}</p>
+            <button id="startLevelBtn">Start Level ${data.level}</button>
+          </div>
+        `;
+        nextBtn.classList.add("hidden");
+        document.getElementById("startLevelBtn").addEventListener("click", () => {
+          loadQuestion();
+          nextBtn.classList.remove("hidden");
+        });
+        return;
+      }
+
+      loadQuestion();
+      nextBtn.classList.remove("hidden");
+    })
+    .catch(err => {
+      quizContainer.innerHTML = `
+        <p style="color:#b22222;">⚠️ Could not load Level ${level}.<br>
+        Please ensure the file <strong>questions/level${level}.json</strong> exists.</p>
+      `;
+      console.error("Error loading level:", err);
+    });
+}
+
+// --- Load one question at a time ---
+function loadQuestion() {
+  const q = levelData[currentQuestion];
+  progressBar.style.width = `${(currentQuestion / levelData.length) * 100}%`;
+  quizContainer.innerHTML = `
+    <div class="question">
+      <h3>Question ${currentQuestion + 1} of ${levelData.length}</h3>
+      <p>${q.question}</p>
+    </div>
+  `;
+
+  q.options.forEach((option, i) => {
+    const btn = document.createElement("button");
+    btn.textContent = option;
+    btn.classList.add("option");
+    btn.addEventListener("click", () => selectAnswer(i, btn));
+    quizContainer.appendChild(btn);
+  });
+
+  nextBtn.disabled = true;
+}
+
+function selectAnswer(index, btn) {
+  levelData[currentQuestion].selected = index;
+  nextBtn.disabled = false;
+  document.querySelectorAll(".option").forEach(opt => (opt.style.background = "#fff"));
+  btn.style.background = "#c5f2cc";
+}
+
+nextBtn.addEventListener("click", () => {
+  const current = levelData[currentQuestion];
+  if (current.selected === current.correctIndex) score++;
+  currentQuestion++;
+  if (currentQuestion < levelData.length) loadQuestion();
+  else finishLevel();
+});
+
+// --- Calculate and display results ---
+function finishLevel() {
+  progressBar.style.width = "100%";
+  const totalQuestions = levelData.length;
+  const percent = (score / totalQuestions) * 100;
+
+  let tsaaScores = JSON.parse(localStorage.getItem("tsaaScores")) || {};
+  tsaaScores[`level${currentLevel}`] = percent;
+  localStorage.setItem("tsaaScores", JSON.stringify(tsaaScores));
+
+  quizContainer.classList.add("hidden");
+  nextBtn.classList.add("hidden");
+  restartBtn.classList.remove("hidden");
+  resultContainer.classList.remove("hidden");
+
+  let color = percent >= PASSING_SCORE ? "#d8f7d3" : "#f9d3d3";
+  resultContainer.style.background = color;
+
+  let feedback =
+    percent >= 90
+      ? `🌟 Outstanding work, ${playerName}! You’ve mastered this level with excellent accuracy.`
+      : percent >= 70
+      ? `✅ Great job, ${playerName}! You passed and are building strong understanding.`
+      : `⚠️ Keep practicing, ${playerName}. Review your notes and try again.`;
+
+  const levelsCompleted = Object.keys(tsaaScores).length;
+  const total = Object.values(tsaaScores).reduce((a, b) => a + b, 0);
+  const avg = total / levelsCompleted;
+  const performance =
+    avg >= 90
+      ? "🌟 Excellent overall performance"
+      : avg >= 70
+      ? "✅ Solid progress — you’re understanding the principles well"
+      : "⚠️ Keep learning — steady progress will pay off";
+
+  resultContainer.innerHTML = `
+    <h2>Level ${currentLevel} Complete</h2>
+    <h3>Your Score: ${score} / ${totalQuestions} (${Math.round(percent)}%)</h3>
+    <p>${feedback}</p>
+    <hr>
+    <h3>Current Progress Summary</h3>
+    <p><strong>Levels Completed:</strong> ${levelsCompleted}</p>
+    <p><strong>Average Score So Far:</strong> ${Math.round(avg)}%</p>
+    <p>${performance}</p>
+  `;
+
+  if (currentLevel === 5) {
+    const overall =
+      avg >= 90
+        ? `🌟 Exceptional, ${playerName}! You have a deep understanding of lawful self-governance.`
+        : avg >= 70
+        ? `✅ Strong performance, ${playerName}! You’ve built a solid foundation.`
+        : `⚠️ Keep learning, ${playerName} — review key topics and try again.`;
+
+    resultContainer.innerHTML += `
+      <hr>
+      <h2>Final Performance Summary</h2>
+      <p><strong>Levels Completed:</strong> ${levelsCompleted} / 5</p>
+      <p><strong>Average Score:</strong> ${Math.round(avg)}%</p>
+      <p>${overall}</p>
+      <p style="margin-top:15px;">Thank you for completing the Southern African Assembly Knowledge Quiz, ${playerName}! 🇿🇦</p>
+      <button id="resetBtn">Start Over</button>
+    `;
+
+    document.getElementById("resetBtn").addEventListener("click", () => {
+      localStorage.clear();
+      currentLevel = 1;
+      location.reload();
+    });
+  } else if (percent >= PASSING_SCORE && currentLevel < TOTAL_LEVELS) {
+    resultContainer.innerHTML += `
+      <button id="nextLevelBtn">Next Level</button>
+    `;
+    document.getElementById("nextLevelBtn").addEventListener("click", () => {
+      currentLevel++;
+      localStorage.setItem("tsaaLevel", currentLevel);
+      loadLevel(currentLevel);
+    });
+  }
+}
+
+restartBtn.addEventListener("click", () => {
+  loadLevel(currentLevel);
+});
+
+resetAllBtn.addEventListener("click", () => {
+  if (confirm("Are you sure you want to restart the entire quiz from Level 1?")) {
+    localStorage.clear();
+    currentLevel = 1;
+    location.reload();
+  }
+});
