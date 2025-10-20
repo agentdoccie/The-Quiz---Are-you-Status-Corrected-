@@ -40,6 +40,7 @@ function loadLevel(level) {
       restartBtn.classList.add("hidden");
       nextBtn.classList.remove("hidden");
         if (data.summary) {
+          progressBar.style.width = "0%"; // reset bar at start of each level
     quizContainer.innerHTML = `
       <div class="summary-card">
         <h3>Level Overview</h3>
