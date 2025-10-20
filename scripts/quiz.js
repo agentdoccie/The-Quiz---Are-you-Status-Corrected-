@@ -35,7 +35,7 @@ function loadLevel(level) {
       currentQuestion = 0;
       score = 0;
 
-      // Update the title bar
+      // Update title
       levelTitle.innerHTML = `Level ${data.level}: ${data.title}`;
 
       // Reset UI elements
@@ -43,11 +43,11 @@ function loadLevel(level) {
       resultContainer.classList.add("hidden");
       restartBtn.classList.add("hidden");
       nextBtn.classList.remove("hidden");
-      nextBtn.disabled = true; // reset state
+      nextBtn.disabled = true;
       progressBar.style.width = "0%";
 
       // --- Handle Summary Card ---
-      if (data.summary) {
+      if (data.summary && !data.started) {
         quizContainer.innerHTML = `
           <div class="summary-card">
             <h3>Level Overview</h3>
@@ -56,7 +56,8 @@ function loadLevel(level) {
           </div>
         `;
 
-        // Hide "Next" button until quiz starts
+        // Mark this level as started so it won’t repeat the summary
+        data.started = true;
         nextBtn.classList.add("hidden");
 
         document
@@ -66,10 +67,11 @@ function loadLevel(level) {
             loadQuestion();
           });
 
-        return; // stop until "Start Level" clicked
+        return; // Wait for "Start Level"
       }
 
-      // If no summary, load questions immediately
+      // --- Always ensure "Next" button shows for all subsequent levels ---
+      nextBtn.classList.remove("hidden");
       loadQuestion();
     })
     .catch(err => {
