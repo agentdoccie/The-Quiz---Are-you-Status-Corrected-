@@ -3,7 +3,7 @@
 // ===============================
 
 const PASSING_SCORE = 70;
-const TOTAL_LEVELS = 100;
+const TOTAL_LEVELS = 5; // adjust if you add more levels later
 let currentLevel = parseInt(localStorage.getItem("tsaaLevel")) || 1;
 let currentQuestion = 0;
 let score = 0;
@@ -20,6 +20,10 @@ const levelTitle = document.getElementById("levelTitle");
 const resetAllBtn = document.getElementById("resetAllBtn");
 const progressDiv = document.getElementById("progress");
 
+// --- Header + Tracker ---
+const playerWelcome = document.getElementById("playerWelcome");
+const progressTracker = document.getElementById("progressTracker");
+
 // --- Welcome screen elements ---
 const welcomeScreen = document.getElementById("welcomeScreen");
 const playerNameInput = document.getElementById("playerNameInput");
@@ -34,11 +38,9 @@ const restartFromBeginningBtn = document.getElementById("restartFromBeginningBtn
 // --- Handle welcome + returning players ---
 document.addEventListener("DOMContentLoaded", () => {
   if (playerName) {
-    // Returning player
     returningName.textContent = playerName;
     welcomeBackScreen.classList.remove("hidden");
   } else {
-    // New player
     welcomeScreen.classList.remove("hidden");
   }
 });
@@ -51,13 +53,9 @@ startQuizBtn.addEventListener("click", () => {
     return;
   }
 
-  // Save player name
   playerName = name;
   localStorage.setItem("playerName", playerName);
-
-  // Hide welcome and show quiz interface
   welcomeScreen.classList.add("hidden");
-  welcomeBackScreen.classList.add("hidden");
   startQuiz();
 });
 
@@ -78,12 +76,19 @@ restartFromBeginningBtn.addEventListener("click", () => {
 
 // --- Function to start the quiz ---
 function startQuiz() {
+  // Show personalized greeting and tracker
+  playerWelcome.textContent = `Welcome, ${playerName}!`;
+  playerWelcome.classList.remove("hidden");
+
+  updateProgressTracker();
+
+  // Show quiz interface
   levelTitle.classList.remove("hidden");
   quizContainer.classList.remove("hidden");
   progressDiv.classList.remove("hidden");
   nextBtn.classList.remove("hidden");
 
-  // ✅ Now actually load the level
+  // Load first level
   loadLevel(currentLevel);
 }
 
@@ -106,7 +111,6 @@ function loadLevel(level) {
       score = 0;
       levelTitle.innerHTML = `Level ${data.level}: ${data.title}`;
 
-      // If there's a summary, show it before starting
       if (data.summary) {
         quizContainer.innerHTML = `
           <div class="summary-card">
@@ -116,7 +120,6 @@ function loadLevel(level) {
           </div>
         `;
         nextBtn.classList.add("hidden");
-
         document.getElementById("startLevelBtn").addEventListener("click", () => {
           loadQuestion();
           nextBtn.classList.remove("hidden");
@@ -140,6 +143,7 @@ function loadLevel(level) {
 function loadQuestion() {
   const q = levelData[currentQuestion];
   progressBar.style.width = `${(currentQuestion / levelData.length) * 100}%`;
+
   quizContainer.innerHTML = `
     <div class="question">
       <h3>Question ${currentQuestion + 1} of ${levelData.length}</h3>
@@ -158,12 +162,12 @@ function loadQuestion() {
   nextBtn.disabled = true;
 }
 
-// --- Select answer ---
+// --- Handle answer selection ---
 function selectAnswer(index, btn) {
   levelData[currentQuestion].selected = index;
   nextBtn.disabled = false;
   document.querySelectorAll(".option").forEach(opt => (opt.style.background = "#fff"));
-  btn.style.background = "#c5f2cc";
+  btn.style.background = "#c5f2cc"; // green highlight
 }
 
 // --- Handle "Next" button ---
@@ -175,7 +179,7 @@ nextBtn.addEventListener("click", () => {
   else finishLevel();
 });
 
-// --- Finish level + summary ---
+// --- Calculate and display results ---
 function finishLevel() {
   progressBar.style.width = "100%";
   const totalQuestions = levelData.length;
@@ -213,6 +217,8 @@ function finishLevel() {
     <p><strong>Average Score:</strong> ${Math.round(avg)}%</p>
   `;
 
+  updateProgressTracker();
+
   if (percent >= PASSING_SCORE && currentLevel < TOTAL_LEVELS) {
     resultContainer.innerHTML += `
       <button id="nextLevelBtn">Next Level</button>
@@ -238,3 +244,18 @@ resetAllBtn.addEventListener("click", () => {
     location.reload();
   }
 });
+
+// --- Update progress tracker (enhanced with green complete style) ---
+function updateProgressTracker() {
+  const completion = ((currentLevel - 1) / TOTAL_LEVELS) * 100;
+  progressTracker.textContent = `🧭 Level ${currentLevel} of ${TOTAL_LEVELS} — ${Math.round(completion)}% Complete`;
+
+  // Green highlight when finished
+  if (completion >= 100) {
+    progressTracker.classList.add("complete");
+  } else {
+    progressTracker.classList.remove("complete");
+  }
+
+  progressTracker.classList.remove("hidden");
+}
