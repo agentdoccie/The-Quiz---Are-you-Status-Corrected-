@@ -206,3 +206,13 @@ function finishLevel() {
 restartBtn.addEventListener("click", () => {
   loadLevel(currentLevel);
 });
+// --- Global Restart Quiz button ---
+const resetAllBtn = document.getElementById("resetAllBtn");
+resetAllBtn.addEventListener("click", () => {
+  if (confirm("Are you sure you want to restart the entire quiz from Level 1?")) {
+    localStorage.removeItem("tsaaScores");
+    localStorage.removeItem("tsaaLevel");
+    currentLevel = 1;
+    loadLevel(currentLevel);
+  }
+});
