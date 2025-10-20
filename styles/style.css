@@ -1,10 +1,12 @@
 /* =======================================
-   TSAA Knowledge Quiz — Official Styling
+   Southern African Assembly Knowledge Quiz
+   Official Visual Theme
    ======================================= */
 
+/* General Page Layout */
 body {
   font-family: 'Segoe UI', Arial, sans-serif;
-  background-color: #f5f9fc; /* soft blue-white background */
+  background-color: #f5f9fc;
   color: #1e2a38;
   margin: 0;
   padding: 0;
@@ -14,6 +16,7 @@ body {
   min-height: 100vh;
 }
 
+/* Main Quiz Container */
 #container {
   background: #ffffff;
   margin-top: 40px;
@@ -25,20 +28,58 @@ body {
   text-align: center;
 }
 
-h1 {
-  color: #003366; /* TSAA deep blue */
-  margin-bottom: 10px;
-  font-size: 1.8em;
-  letter-spacing: 0.5px;
+/* ===== Southern African Assembly Header ===== */
+#tsaaHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 25px;
+  border-bottom: 2px solid #0073aa;
+  padding-bottom: 15px;
+  text-align: center;
 }
 
+#tsaaLogo {
+  width: 120px;
+  height: auto;
+  margin-bottom: 10px;
+  max-width: 80%;
+}
+
+h1 {
+  font-size: 1.6em;
+  color: #003366;
+  margin: 0;
+}
+
+/* Responsive resizing for desktop */
+@media (min-width: 600px) {
+  #tsaaHeader {
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  #tsaaLogo {
+    width: 80px;
+    margin-bottom: 0;
+  }
+
+  h1 {
+    font-size: 1.8em;
+  }
+}
+
+/* Level Title */
 h2#levelTitle {
   color: #0073aa;
   font-weight: 500;
-  margin-top: 0;
+  margin-top: 10px;
   margin-bottom: 20px;
 }
 
+/* Progress Bar */
 #progress {
   background: #d6eaf8;
   border-radius: 10px;
@@ -48,16 +89,18 @@ h2#levelTitle {
 }
 
 #progressBar {
-  background: #0073aa; /* TSAA blue */
+  background: #0073aa;
   height: 100%;
   width: 0%;
   transition: width 0.4s ease;
 }
 
+/* Questions */
 .question {
   margin-bottom: 20px;
 }
 
+/* Answer Buttons */
 button.option {
   display: block;
   width: 100%;
@@ -77,6 +120,7 @@ button.option:hover {
   color: white;
 }
 
+/* Control Buttons */
 #nextBtn,
 #restartBtn {
   background: #0073aa;
@@ -95,6 +139,7 @@ button.option:hover {
   background: #005f87;
 }
 
+/* Results Section */
 #result {
   background: #f0f8ff;
   border-radius: 10px;
@@ -103,10 +148,12 @@ button.option:hover {
   border: 1px solid #b0d4e3;
 }
 
+/* Hidden Utility */
 .hidden {
   display: none;
 }
 
+/* Mobile Adjustments */
 @media (max-width: 600px) {
   #container {
     width: 95%;
@@ -115,5 +162,9 @@ button.option:hover {
 
   h1 {
     font-size: 1.4em;
+  }
+
+  #tsaaLogo {
+    width: 100px;
   }
 }
