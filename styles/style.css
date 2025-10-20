@@ -210,3 +210,39 @@ button.option:hover {
 #welcomeBackScreen button:hover {
   background: #005f87;
 }
+.welcome-text {
+  display: block;
+  color: #005f87;
+  font-size: 1rem;
+  margin-top: 5px;
+  font-weight: 500;
+  animation: fadeIn 1s ease-in;
+}
+
+#playerNameInput {
+  width: 80%;
+  padding: 10px;
+  margin-top: 10px;
+  border: 1px solid #0073aa;
+  border-radius: 6px;
+  font-size: 1em;
+}
+
+button {
+  background: #0073aa;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin: 10px 5px;
+}
+
+button:hover {
+  background: #005f87;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
