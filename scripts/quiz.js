@@ -20,23 +20,36 @@ function finishLevel() {
   // Determine level summary message
   let feedback =
     percent >= 90
-      ? "Outstanding! You’ve mastered this level with excellent accuracy."
+      ? "🌟 Outstanding! You’ve mastered this level with excellent accuracy."
       : percent >= 70
-      ? "Great job! You passed and are building strong understanding."
-      : "Keep practicing! Review your notes and try again.";
+      ? "✅ Great job! You passed and are building strong understanding."
+      : "⚠️ Keep practicing! Review your notes and try again.";
 
-  // Show individual level result
+  // --- Calculate running average across all completed levels ---
+  const levelsCompleted = Object.keys(tsaaScores).length;
+  const total = Object.values(tsaaScores).reduce((a, b) => a + b, 0);
+  const avg = total / levelsCompleted;
+  const performance =
+    avg >= 90
+      ? "🌟 Excellent overall performance"
+      : avg >= 70
+      ? "✅ Solid progress — you’re understanding the principles well"
+      : "⚠️ Keep learning — steady progress will pay off";
+
+  // Show level summary and current overall performance
   resultContainer.innerHTML = `
     <h2>Level ${currentLevel} Complete</h2>
     <h3>Your Score: ${score} / ${totalQuestions} (${Math.round(percent)}%)</h3>
     <p>${feedback}</p>
+    <hr>
+    <h3>Current Progress Summary</h3>
+    <p><strong>Levels Completed:</strong> ${levelsCompleted}</p>
+    <p><strong>Average Score So Far:</strong> ${Math.round(avg)}%</p>
+    <p>${performance}</p>
   `;
 
-  // If this is the final level (Level 5), show overall summary
+  // If this is the final level (Level 5), show final message
   if (currentLevel === 5) {
-    const levelsCompleted = Object.keys(tsaaScores).length;
-    const total = Object.values(tsaaScores).reduce((a, b) => a + b, 0);
-    const avg = total / levelsCompleted;
     const overall =
       avg >= 90
         ? "🌟 Exceptional! You have a deep understanding of lawful self-governance."
