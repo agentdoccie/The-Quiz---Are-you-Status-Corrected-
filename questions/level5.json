@@ -7,60 +7,60 @@
     {
       "question": "What is the main purpose of a Deed of Re-Conveyance?",
       "options": [
-        "To transfer land to the state",
+        "To register a new trade name for commercial use",
         "To return the name and estate to the land and soil jurisdiction",
-        "To register a new corporate entity",
-        "To obtain a business license"
+        "To notify a bank of ownership changes",
+        "To transfer property to a trust organization"
       ],
       "correctIndex": 1
     },
     {
       "question": "In the TSAA lawful process, what does 're-conveyance' literally mean?",
       "options": [
-        "Moving property back from maritime jurisdiction to land jurisdiction",
+        "Recording ownership in a private land registry",
         "Selling a deed to another owner",
-        "Recording ownership in a trust company",
-        "Cancelling a mortgage contract"
+        "Moving property back from maritime jurisdiction to land jurisdiction",
+        "Cancelling a mortgage agreement"
       ],
-      "correctIndex": 0
+      "correctIndex": 2
     },
     {
       "question": "Which entity originally claimed ownership over your estate through registration?",
       "options": [
-        "The living family estate",
         "A foreign corporate government operating under maritime law",
-        "The local assembly of people",
-        "A lawful land court"
+        "A municipal public office of record",
+        "The lawful land and soil assembly",
+        "Your family trust administrators"
       ],
-      "correctIndex": 1
+      "correctIndex": 0
     },
     {
       "question": "What key step follows completing the Deed of Re-Conveyance?",
       "options": [
         "Recording it publicly on the land and soil jurisdiction",
-        "Mailing it to a court of maritime law",
-        "Keeping it private and unrecorded",
-        "Having it notarized only"
+        "Having it signed only by a notary public",
+        "Sending it to the registrar of deeds for approval",
+        "Keeping it private for personal safekeeping"
       ],
       "correctIndex": 0
     },
     {
       "question": "Why must the Deed be recorded publicly?",
       "options": [
-        "Because only public record creates lawful notice and claim of ownership",
-        "Because private contracts are not legally binding",
-        "Because the courts demand it",
-        "Because it gives voting rights"
+        "Because only public record establishes lawful notice and claim of ownership",
+        "Because the Assembly requires proof of mailing",
+        "Because private filings do not establish intent",
+        "Because the courts automatically validate it afterward"
       ],
       "correctIndex": 0
     },
     {
       "question": "What additional filings often accompany a Deed of Re-Conveyance?",
       "options": [
-        "Common Carry Declaration and Political Status Correction documents",
-        "Vehicle Registration and Tax Certificates",
-        "Business Franchise Applications",
-        "Bank Loan Agreements"
+        "A political status correction and a common carry declaration",
+        "Vehicle registration and banking declarations",
+        "Municipal tax filings and license renewals",
+        "An affidavit of citizenship and employment form"
       ],
       "correctIndex": 0
     },
@@ -68,9 +68,9 @@
       "question": "What does 'status correction' achieve under TSAA principles?",
       "options": [
         "It restores your lawful identity as a living man or woman on the land",
-        "It changes your nationality to another country",
-        "It cancels all debts automatically",
-        "It transfers citizenship to a trust"
+        "It suspends all prior commercial contracts indefinitely",
+        "It converts your citizenship into a private trust",
+        "It transfers property rights to an international jurisdiction"
       ],
       "correctIndex": 0
     },
@@ -78,29 +78,29 @@
       "question": "What is the lawful reason for including witnesses on a Deed of Re-Conveyance?",
       "options": [
         "To provide living testimony that the act was voluntary and lawful",
-        "To make it appear more official for filing",
-        "Because maritime courts require it",
-        "Because it replaces a judge’s signature"
+        "To add formality so the registrar will file it faster",
+        "To show compliance with maritime court procedure",
+        "To replace the need for a land notary signature"
       ],
       "correctIndex": 0
     },
     {
       "question": "What does TSAA teach about the relationship between the living being and the corporate PERSON?",
       "options": [
-        "They are the same under natural law",
-        "The corporate PERSON is a fiction created by registration; the living being must reclaim control",
-        "The PERSON has more rights than the living man or woman",
-        "The PERSON represents a lawful titleholder"
+        "They are two separate entities; the PERSON is a fiction under corporate jurisdiction",
+        "They are interchangeable under statutory law",
+        "They become the same after status correction",
+        "They both operate equally in the public domain"
       ],
-      "correctIndex": 1
+      "correctIndex": 0
     },
     {
       "question": "Completing and recording your Deed of Re-Conveyance results in:",
       "options": [
         "The restoration of lawful title, ownership, and standing under public law",
-        "A corporate license to operate commercially",
-        "A maritime lien over the state",
-        "A suspension of all public obligations"
+        "A declaration of financial independence from the Assembly",
+        "An application for land grant privileges",
+        "The creation of a maritime lien against your estate"
       ],
       "correctIndex": 0
     }
