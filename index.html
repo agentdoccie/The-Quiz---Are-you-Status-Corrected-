@@ -1,69 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Southern African Assembly Knowledge Quiz</title>
 
-  <!-- Link to external CSS -->
-  <link rel="stylesheet" href="styles/style.css" />
+  <!-- Link to external CSS file -->
+  <link rel="stylesheet" href="styles/style.css">
 
   <!-- Optional Favicon -->
-  <link rel="icon" href="images/southern-assembly-logo.png" type="image/png" />
+  <link rel="icon" href="images/southern-assembly-logo.png" type="image/png">
 </head>
 
 <body>
   <div id="container">
 
-    <!-- ===== Header ===== -->
+    <!-- Header Section -->
     <header id="tsaaHeader">
-      <img
-        src="images/southern-assembly-logo.png"
-        alt="Southern African Assembly Logo"
-        id="tsaaLogo"
-      />
-      <h1>Southern African Assembly Knowledge Quiz</h1>
+      <img src="images/southern-assembly-logo.png" alt="Southern African Assembly Logo" id="tsaaLogo">
+      <h1>
+        Southern African Assembly Knowledge Quiz
+        <br>
+        <span id="playerWelcome" class="welcome-text hidden"></span>
+      </h1>
     </header>
 
-    <!-- ===== Welcome Screen (asks for player name) ===== -->
-    <div id="welcomeScreen">
-      <h2>Welcome!</h2>
-      <p>Please enter your name to begin the quiz.</p>
-      <input type="text" id="playerNameInput" placeholder="Enter your name" />
+    <!-- Dynamic Level Title -->
+    <h2 id="levelTitle" class="hidden"></h2>
+
+    <!-- Progress Bar -->
+    <div id="progress" class="hidden">
+      <div id="progressBar"></div>
+    </div>
+
+    <!-- Welcome Screen (New Player) -->
+    <div id="welcomeScreen" class="hidden">
+      <h2>Welcome to the Southern African Assembly Knowledge Quiz</h2>
+      <p>Please enter your name to begin your learning journey.</p>
+      <input type="text" id="playerNameInput" placeholder="Enter your full name" maxlength="40">
       <button id="startQuizBtn">Start Quiz</button>
     </div>
 
-    <!-- ===== Welcome Back Screen (for returning players) ===== -->
+    <!-- Welcome Back Screen (Returning Player) -->
     <div id="welcomeBackScreen" class="hidden">
-      <h2>Welcome back, <span id="returningName"></span>! 👋</h2>
+      <h2>Welcome Back, <span id="returningName"></span> 👋</h2>
       <p>Would you like to continue where you left off or start over?</p>
       <button id="continueBtn">Continue</button>
       <button id="restartFromBeginningBtn">Start Over</button>
     </div>
 
-    <!-- ===== Dynamic Level Title ===== -->
-    <h2 id="levelTitle" class="hidden"></h2>
-
-    <!-- ===== Progress Bar ===== -->
-    <div id="progress" class="hidden">
-      <div id="progressBar"></div>
-    </div>
-
-    <!-- ===== Quiz Content ===== -->
+    <!-- Quiz Content -->
     <div id="quiz" class="hidden"></div>
 
-    <!-- ===== Control Buttons ===== -->
-    <div id="controlButtons">
+    <!-- Control Buttons -->
+    <div id="controls">
       <button id="nextBtn" class="hidden">Next</button>
-      <button id="restartBtn" class="hidden">Restart</button>
-      <button id="resetAllBtn">Restart Quiz</button>
+      <button id="restartBtn" class="hidden">Restart Level</button>
+      <button id="resetAllBtn" class="hidden">Restart Quiz</button>
     </div>
 
-    <!-- ===== Results Section ===== -->
+    <!-- Results Section -->
     <div id="result" class="hidden"></div>
+
   </div>
 
-  <!-- ===== JavaScript Logic ===== -->
+  <!-- JavaScript Quiz Logic -->
   <script src="scripts/quiz.js"></script>
 </body>
 </html>
