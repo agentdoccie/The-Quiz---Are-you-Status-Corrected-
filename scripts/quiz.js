@@ -50,9 +50,14 @@ startQuizBtn.addEventListener("click", () => {
     alert("Please enter your full name to continue.");
     return;
   }
+
+  // Save player name
   playerName = name;
   localStorage.setItem("playerName", playerName);
+
+  // Hide welcome and show quiz interface
   welcomeScreen.classList.add("hidden");
+  welcomeBackScreen.classList.add("hidden");
   startQuiz();
 });
 
@@ -77,6 +82,8 @@ function startQuiz() {
   quizContainer.classList.remove("hidden");
   progressDiv.classList.remove("hidden");
   nextBtn.classList.remove("hidden");
+
+  // ✅ Now actually load the level
   loadLevel(currentLevel);
 }
 
@@ -99,6 +106,7 @@ function loadLevel(level) {
       score = 0;
       levelTitle.innerHTML = `Level ${data.level}: ${data.title}`;
 
+      // If there's a summary, show it before starting
       if (data.summary) {
         quizContainer.innerHTML = `
           <div class="summary-card">
@@ -108,6 +116,7 @@ function loadLevel(level) {
           </div>
         `;
         nextBtn.classList.add("hidden");
+
         document.getElementById("startLevelBtn").addEventListener("click", () => {
           loadQuestion();
           nextBtn.classList.remove("hidden");
@@ -149,6 +158,7 @@ function loadQuestion() {
   nextBtn.disabled = true;
 }
 
+// --- Select answer ---
 function selectAnswer(index, btn) {
   levelData[currentQuestion].selected = index;
   nextBtn.disabled = false;
@@ -156,6 +166,7 @@ function selectAnswer(index, btn) {
   btn.style.background = "#c5f2cc";
 }
 
+// --- Handle "Next" button ---
 nextBtn.addEventListener("click", () => {
   const current = levelData[currentQuestion];
   if (current.selected === current.correctIndex) score++;
@@ -164,7 +175,7 @@ nextBtn.addEventListener("click", () => {
   else finishLevel();
 });
 
-// --- Calculate and display results ---
+// --- Finish level + summary ---
 function finishLevel() {
   progressBar.style.width = "100%";
   const totalQuestions = levelData.length;
@@ -184,56 +195,25 @@ function finishLevel() {
 
   let feedback =
     percent >= 90
-      ? `🌟 Outstanding work, ${playerName}! You’ve mastered this level with excellent accuracy.`
+      ? `🌟 Outstanding work, ${playerName}! You’ve mastered this level.`
       : percent >= 70
-      ? `✅ Great job, ${playerName}! You passed and are building strong understanding.`
-      : `⚠️ Keep practicing, ${playerName}. Review your notes and try again.`;
+      ? `✅ Great job, ${playerName}! You passed this level.`
+      : `⚠️ Keep studying, ${playerName} — try again soon.`;
 
   const levelsCompleted = Object.keys(tsaaScores).length;
   const total = Object.values(tsaaScores).reduce((a, b) => a + b, 0);
   const avg = total / levelsCompleted;
-  const performance =
-    avg >= 90
-      ? "🌟 Excellent overall performance"
-      : avg >= 70
-      ? "✅ Solid progress — you’re understanding the principles well"
-      : "⚠️ Keep learning — steady progress will pay off";
 
   resultContainer.innerHTML = `
     <h2>Level ${currentLevel} Complete</h2>
     <h3>Your Score: ${score} / ${totalQuestions} (${Math.round(percent)}%)</h3>
     <p>${feedback}</p>
     <hr>
-    <h3>Current Progress Summary</h3>
     <p><strong>Levels Completed:</strong> ${levelsCompleted}</p>
-    <p><strong>Average Score So Far:</strong> ${Math.round(avg)}%</p>
-    <p>${performance}</p>
+    <p><strong>Average Score:</strong> ${Math.round(avg)}%</p>
   `;
 
-  if (currentLevel === 5) {
-    const overall =
-      avg >= 90
-        ? `🌟 Exceptional, ${playerName}! You have a deep understanding of lawful self-governance.`
-        : avg >= 70
-        ? `✅ Strong performance, ${playerName}! You’ve built a solid foundation.`
-        : `⚠️ Keep learning, ${playerName} — review key topics and try again.`;
-
-    resultContainer.innerHTML += `
-      <hr>
-      <h2>Final Performance Summary</h2>
-      <p><strong>Levels Completed:</strong> ${levelsCompleted} / 5</p>
-      <p><strong>Average Score:</strong> ${Math.round(avg)}%</p>
-      <p>${overall}</p>
-      <p style="margin-top:15px;">Thank you for completing the Southern African Assembly Knowledge Quiz, ${playerName}! 🇿🇦</p>
-      <button id="resetBtn">Start Over</button>
-    `;
-
-    document.getElementById("resetBtn").addEventListener("click", () => {
-      localStorage.clear();
-      currentLevel = 1;
-      location.reload();
-    });
-  } else if (percent >= PASSING_SCORE && currentLevel < TOTAL_LEVELS) {
+  if (percent >= PASSING_SCORE && currentLevel < TOTAL_LEVELS) {
     resultContainer.innerHTML += `
       <button id="nextLevelBtn">Next Level</button>
     `;
@@ -245,10 +225,12 @@ function finishLevel() {
   }
 }
 
+// --- Restart current level ---
 restartBtn.addEventListener("click", () => {
   loadLevel(currentLevel);
 });
 
+// --- Reset the entire quiz ---
 resetAllBtn.addEventListener("click", () => {
   if (confirm("Are you sure you want to restart the entire quiz from Level 1?")) {
     localStorage.clear();
