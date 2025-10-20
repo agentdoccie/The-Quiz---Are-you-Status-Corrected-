@@ -1,6 +1,6 @@
 // ===============================
 //  Southern African Assembly Knowledge Quiz
-//  (Save, Resume & Branded Save & Exit Screen)
+//  (Save, Resume, Save & Exit + Return Home)
 // ===============================
 
 const PASSING_SCORE = 70;
@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// --- Start new player ---
+// --- New player starts quiz ---
 startQuizBtn.addEventListener("click", () => {
   const name = playerNameInput.value.trim();
   if (name.length < 2) {
@@ -76,12 +76,13 @@ startQuizBtn.addEventListener("click", () => {
   startQuiz();
 });
 
-// --- Continue or restart returning player ---
+// --- Returning player continues ---
 continueBtn.addEventListener("click", () => {
   welcomeBackScreen.classList.add("hidden");
-  startQuiz(true); // resume
+  startQuiz(true);
 });
 
+// --- Returning player restarts ---
 restartFromBeginningBtn.addEventListener("click", () => {
   if (confirm("Are you sure you want to start over from Level 1?")) {
     localStorage.clear();
@@ -92,7 +93,7 @@ restartFromBeginningBtn.addEventListener("click", () => {
   }
 });
 
-// --- Start Quiz (supports resume) ---
+// --- Start quiz ---
 function startQuiz(resume = false) {
   playerWelcome.textContent = `Welcome, ${playerName}!`;
   playerWelcome.classList.remove("hidden");
@@ -103,7 +104,6 @@ function startQuiz(resume = false) {
   progressDiv.classList.remove("hidden");
   nextBtn.classList.remove("hidden");
 
-  // Add Save & Exit button
   if (!document.getElementById("saveExitBtn")) {
     nextBtn.insertAdjacentElement("afterend", saveExitBtn);
   }
@@ -111,7 +111,7 @@ function startQuiz(resume = false) {
   loadLevel(currentLevel, resume);
 }
 
-// --- Load level ---
+// --- Load a level ---
 function loadLevel(level, resume = false) {
   quizContainer.innerHTML = "";
   resultContainer.classList.add("hidden");
@@ -126,7 +126,6 @@ function loadLevel(level, resume = false) {
     })
     .then(data => {
       levelData = data.questions;
-
       const savedSelections = JSON.parse(localStorage.getItem(`tsaaSelections_level${level}`)) || [];
       levelData.forEach((q, i) => (q.selected = savedSelections[i] !== undefined ? savedSelections[i] : null));
 
@@ -164,8 +163,8 @@ function loadLevel(level, resume = false) {
     });
 }
 
-// --- Load one question ---
-function loadQuestion(resume = false) {
+// --- Load a question ---
+function loadQuestion() {
   const q = levelData[currentQuestion];
   progressBar.style.width = `${(currentQuestion / levelData.length) * 100}%`;
 
@@ -210,7 +209,7 @@ function saveProgress() {
   localStorage.setItem(`tsaaSelections_level${currentLevel}`, JSON.stringify(selections));
 }
 
-// --- Save & Exit ---
+// --- Save & Exit (branded screen + Return Home) ---
 function saveAndExit() {
   saveProgress();
 
@@ -221,15 +220,24 @@ function saveAndExit() {
       <h2 style="color:#0073aa;">Progress Saved!</h2>
       <p>Thank you, <strong>${playerName}</strong>.</p>
       <p>Your quiz progress has been securely saved.</p>
-      <p>You may safely close this page now and return anytime to continue your journey.</p>
+      <p>You may safely close this page now or return to the home screen below.</p>
       <p style="font-size:0.9em; color:#444;">Your level and answers are automatically restored when you come back.</p>
-      <hr style="margin:20px 0; border:none; height:1px; background:#ccc;">
+      <button id="returnHomeBtn"
+        style="background:#0073aa; color:white; border:none; border-radius:6px;
+               padding:10px 24px; cursor:pointer; margin-top:20px; font-size:1em;">
+        Return to Home
+      </button>
+      <hr style="margin:25px 0; border:none; height:1px; background:#ccc;">
       <p style="font-style:italic; color:#005f87;">Southern African Assembly — Restoring Lawful Self-Governance</p>
     </div>
   `;
+
+  document.getElementById("returnHomeBtn").addEventListener("click", () => {
+    location.reload(); // reloads to welcome screen
+  });
 }
 
-// --- Next button handler ---
+// --- Next button ---
 nextBtn.addEventListener("click", () => {
   const current = levelData[currentQuestion];
   if (current.selected === current.correctIndex) score++;
