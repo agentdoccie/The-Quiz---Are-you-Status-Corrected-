@@ -1,0 +1,108 @@
+{
+  "level": 5,
+  "title": "The Deed of Re-Conveyance and Status Correction Process",
+  "summary": "Level 5 teaches the practical foundation of reclaiming your lawful identity through the Deed of Re-Conveyance and related filings. You will learn how this process moves your name and estate back to the land and soil jurisdiction, restoring ownership, responsibility, and sovereignty under public law.",
+
+  "questions": [
+    {
+      "question": "What is the main purpose of a Deed of Re-Conveyance?",
+      "options": [
+        "To transfer land to the state",
+        "To return the name and estate to the land and soil jurisdiction",
+        "To register a new corporate entity",
+        "To obtain a business license"
+      ],
+      "correctIndex": 1
+    },
+    {
+      "question": "In the TSAA lawful process, what does 're-conveyance' literally mean?",
+      "options": [
+        "Moving property back from maritime jurisdiction to land jurisdiction",
+        "Selling a deed to another owner",
+        "Recording ownership in a trust company",
+        "Cancelling a mortgage contract"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "question": "Which entity originally claimed ownership over your estate through registration?",
+      "options": [
+        "The living family estate",
+        "A foreign corporate government operating under maritime law",
+        "The local assembly of people",
+        "A lawful land court"
+      ],
+      "correctIndex": 1
+    },
+    {
+      "question": "What key step follows completing the Deed of Re-Conveyance?",
+      "options": [
+        "Recording it publicly on the land and soil jurisdiction",
+        "Mailing it to a court of maritime law",
+        "Keeping it private and unrecorded",
+        "Having it notarized only"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "question": "Why must the Deed be recorded publicly?",
+      "options": [
+        "Because only public record creates lawful notice and claim of ownership",
+        "Because private contracts are not legally binding",
+        "Because the courts demand it",
+        "Because it gives voting rights"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "question": "What additional filings often accompany a Deed of Re-Conveyance?",
+      "options": [
+        "Common Carry Declaration and Political Status Correction documents",
+        "Vehicle Registration and Tax Certificates",
+        "Business Franchise Applications",
+        "Bank Loan Agreements"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "question": "What does 'status correction' achieve under TSAA principles?",
+      "options": [
+        "It restores your lawful identity as a living man or woman on the land",
+        "It changes your nationality to another country",
+        "It cancels all debts automatically",
+        "It transfers citizenship to a trust"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "question": "What is the lawful reason for including witnesses on a Deed of Re-Conveyance?",
+      "options": [
+        "To provide living testimony that the act was voluntary and lawful",
+        "To make it appear more official for filing",
+        "Because maritime courts require it",
+        "Because it replaces a judge’s signature"
+      ],
+      "correctIndex": 0
+    },
+    {
+      "question": "What does TSAA teach about the relationship between the living being and the corporate PERSON?",
+      "options": [
+        "They are the same under natural law",
+        "The corporate PERSON is a fiction created by registration; the living being must reclaim control",
+        "The PERSON has more rights than the living man or woman",
+        "The PERSON represents a lawful titleholder"
+      ],
+      "correctIndex": 1
+    },
+    {
+      "question": "Completing and recording your Deed of Re-Conveyance results in:",
+      "options": [
+        "The restoration of lawful title, ownership, and standing under public law",
+        "A corporate license to operate commercially",
+        "A maritime lien over the state",
+        "A suspension of all public obligations"
+      ],
+      "correctIndex": 0
+    }
+  ]
+}
