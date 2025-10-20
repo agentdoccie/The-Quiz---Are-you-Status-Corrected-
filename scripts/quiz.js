@@ -35,6 +35,20 @@ function loadLevel(level) {
       currentQuestion = 0;
       score = 0;
       levelTitle.innerHTML = `Level ${data.level}: ${data.title}`;
+        if (data.summary) {
+    quizContainer.innerHTML = `
+      <div class="summary-card">
+        <h3>Level Overview</h3>
+        <p>${data.summary}</p>
+        <button id="startLevelBtn">Start Level ${data.level}</button>
+      </div>
+    `;
+    document.getElementById("startLevelBtn").addEventListener("click", () => {
+      loadQuestion();
+    });
+    nextBtn.classList.add("hidden");
+    return; // stops loading questions until user clicks Start
+  }
       quizContainer.classList.remove("hidden");
       resultContainer.classList.add("hidden");
       restartBtn.classList.add("hidden");
