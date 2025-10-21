@@ -1,6 +1,6 @@
 // ===============================
 //  Southern African Assembly Knowledge Quiz
-//  (Save, Resume, Save & Exit + Themed Volunteer Modal)
+//  (Bug-Free Volunteer Modal + Smooth Level Progression)
 // ===============================
 
 const PASSING_SCORE = 70;
@@ -210,43 +210,6 @@ function saveProgress() {
   localStorage.setItem(`tsaaSelections_level${currentLevel}`, JSON.stringify(selections));
 }
 
-// --- Save & Exit ---
-function saveAndExit() {
-  saveProgress();
-
-  document.getElementById("container").innerHTML = `
-    <div style="text-align:center; padding:30px;">
-      <img src="images/southern-assembly-logo.png" alt="Southern African Assembly Logo"
-           style="width:90px; height:auto; margin-bottom:15px; opacity:0.95;">
-      <h2 style="color:#0073aa;">Progress Saved!</h2>
-      <p>Thank you, <strong>${playerName}</strong>.</p>
-      <p>Your quiz progress has been securely saved.</p>
-      <p>You may safely close this page now or return to the home screen below.</p>
-      <button id="returnHomeBtn"
-        style="background:#0073aa; color:white; border:none; border-radius:6px;
-               padding:10px 24px; cursor:pointer; margin-top:20px; font-size:1em;">
-        Return to Home
-      </button>
-      <hr style="margin:25px 0; border:none; height:1px; background:#ccc;">
-      <p style="font-style:italic; color:#005f87;">Southern African Assembly — Restoring Lawful Self-Governance</p>
-    </div>
-  `;
-
-  document.getElementById("returnHomeBtn").addEventListener("click", () => location.reload());
-}
-
-// --- Next button ---
-nextBtn.addEventListener("click", () => {
-  const current = levelData[currentQuestion];
-  if (current.selected === current.correctIndex) score++;
-
-  currentQuestion++;
-  saveProgress();
-
-  if (currentQuestion < levelData.length) loadQuestion();
-  else finishLevel();
-});
-
 // --- Finish level ---
 function finishLevel() {
   progressBar.style.width = "100%";
@@ -263,9 +226,6 @@ function finishLevel() {
   resultContainer.classList.remove("hidden");
   saveExitBtn.classList.add("hidden");
 
-  let color = percent >= PASSING_SCORE ? "#d8f7d3" : "#f9d3d3";
-  resultContainer.style.background = color;
-
   resultContainer.innerHTML = `
     <h2>Level ${currentLevel} Complete</h2>
     <h3>Your Score: ${score} / ${totalQuestions} (${Math.round(percent)}%)</h3>
@@ -273,24 +233,33 @@ function finishLevel() {
 
   updateProgressTracker();
 
-  if (percent >= VOLUNTEER_TRIGGER) showVolunteerModal();
+  // Always show Next Level button (prevent freeze)
+  insertNextLevelButton();
 
-  if (percent >= PASSING_SCORE && currentLevel < TOTAL_LEVELS) {
-    resultContainer.innerHTML += `
-      <hr>
-      <button id="nextLevelBtn">Next Level</button>
-    `;
-    document.getElementById("nextLevelBtn").addEventListener("click", () => {
-      currentLevel++;
-      currentQuestion = 0;
-      score = 0;
-      saveProgress();
-      loadLevel(currentLevel);
-    });
+  // Show volunteer modal if eligible
+  if (percent >= VOLUNTEER_TRIGGER) {
+    setTimeout(() => showVolunteerModal(), 300);
   }
 
   localStorage.removeItem("tsaaQuestion");
   localStorage.removeItem(`tsaaSelections_level${currentLevel}`);
+}
+
+// --- Create Next Level button ---
+function insertNextLevelButton() {
+  if (document.getElementById("nextLevelBtn")) return;
+
+  resultContainer.innerHTML += `
+    <hr>
+    <button id="nextLevelBtn">Next Level</button>
+  `;
+  document.getElementById("nextLevelBtn").addEventListener("click", () => {
+    currentLevel++;
+    currentQuestion = 0;
+    score = 0;
+    saveProgress();
+    loadLevel(currentLevel);
+  });
 }
 
 // --- Volunteer Modal ---
@@ -312,7 +281,7 @@ function showVolunteerModal() {
 
   modal.innerHTML = `
     <div style="background:white; border-radius:12px; padding:25px; width:90%; max-width:420px; text-align:center; box-shadow:0 4px 20px rgba(0,0,0,0.2); animation:fadeIn 0.4s ease;">
-      <img src="images/southern-assembly-logo.png" alt="Southern African Assembly Logo" style="width:70px; height:auto; margin-bottom:10px; opacity:0.95;">
+      <img src="images/southern-assembly-logo.png" alt="Southern African Assembly Logo" style="width:70px; height:auto; margin-bottom:10px;">
       <h3 style="color:#0073aa;">🎉 Wow, ${playerName}!</h3>
       <p>You really understand all this.<br>Have you thought about being a volunteer for the Assembly?</p>
       <div style="margin-top:15px;">
@@ -330,8 +299,12 @@ function showVolunteerModal() {
   });
 
   document.getElementById("noVolunteer").addEventListener("click", () => {
-    alert("👍 Maybe in the future! Let’s hammer on and see what else you know! 😄");
-    closeModal();
+    modal.querySelector("div").innerHTML = `
+      <h3 style="color:#0073aa;">👍 Maybe in the future!</h3>
+      <p>Let's hammer on and see what else you know! 😄</p>
+      <button id="closeModal" style="background:#0073aa; color:white; border:none; border-radius:6px; padding:8px 14px; margin-top:10px; cursor:pointer;">Continue</button>
+    `;
+    document.getElementById("closeModal").addEventListener("click", closeModal);
   });
 
   function closeModal() {
@@ -362,9 +335,5 @@ resetAllBtn.addEventListener("click", () => {
 function updateProgressTracker() {
   const completion = ((currentLevel - 1) / TOTAL_LEVELS) * 100;
   progressTracker.textContent = `🧭 Level ${currentLevel} of ${TOTAL_LEVELS} — ${Math.round(completion)}% Complete`;
-
-  if (completion >= 100) progressTracker.classList.add("complete");
-  else progressTracker.classList.remove("complete");
-
   progressTracker.classList.remove("hidden");
 }
