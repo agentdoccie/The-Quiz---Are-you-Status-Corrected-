@@ -45,7 +45,13 @@
     <div id="result" class="hidden"></div>
   </div>
 
-  <!-- JS Logic -->
-  <script src="quiz.js?v=20251022"></script> <!-- 🚀 Force rebuild marker -->
+    <!-- JavaScript Logic -->
+  <script>
+    // Force GitHub Pages to load JS properly
+    const script = document.createElement("script");
+    script.src = "quiz.js?v=" + new Date().getTime(); // adds timestamp to bypass cache
+    script.defer = true;
+    document.body.appendChild(script);
+  </script>
 </body>
 </html>
