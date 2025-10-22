@@ -3,16 +3,61 @@
 <head>
   <meta charset="UTF-8">
 
-  <!-- ✅ Ensures mobile screens display full width -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <!-- ✅ Viewport Fix: Forces full-width, full-height scaling -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
   <title>Southern African Assembly Knowledge Quiz</title>
 
-  <!-- Link to your external CSS -->
+  <!-- Link to external CSS -->
   <link rel="stylesheet" href="styles/style.css">
 
   <!-- Optional Favicon -->
   <link rel="icon" href="images/southern-assembly-logo.png" type="image/png">
+
+  <style>
+    /* Extra mobile safety fix for cutoff issue */
+    html, body {
+      height: 100%;
+      min-height: 100vh;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      background-color: #f5f9fc;
+    }
+
+    /* Force the main quiz container to always center on screen */
+    #container {
+      max-width: 720px;
+      width: 92%;
+      margin: 20px auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 25px 30px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      min-height: calc(100vh - 40px);
+    }
+
+    /* Mobile adjustments: ensure no horizontal scroll or cutoff */
+    @media (max-width: 768px) {
+      body {
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+      }
+
+      #container {
+        width: 95%;
+        margin: 10px auto;
+        padding: 20px;
+        border-radius: 10px;
+        min-height: calc(100vh - 20px);
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -45,7 +90,7 @@
     <div id="result" class="hidden"></div>
   </div>
 
-  <!-- JavaScript Logic -->
+  <!-- JS Logic -->
   <script src="quiz.js"></script>
 </body>
 </html>
