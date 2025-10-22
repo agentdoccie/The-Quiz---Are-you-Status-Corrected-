@@ -246,17 +246,93 @@ button:hover {
 }
 
 /* Responsive Container */
-@media (max-width: 600px) {
+/* ===========================
+   Mobile-Responsive Styling Fix
+   =========================== */
+
+@media (max-width: 768px) {
   #container {
-    width: 95%;
-    padding: 20px;
+    width: 94%;
+    padding: 18px;
+    margin-top: 20px;
   }
 
-  h1 {
-    font-size: 1.4em;
+  /* Center everything nicely */
+  body {
+    align-items: center;
+  }
+
+  /* Adjust logo and header */
+  #tsaaHeader {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+    margin-bottom: 15px;
   }
 
   #tsaaLogo {
     width: 70px;
+    height: auto;
+  }
+
+  h1 {
+    font-size: 1.3em;
+    line-height: 1.2em;
+    text-align: center;
+  }
+
+  /* Welcome screen layout */
+  #welcomeScreen {
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  #welcomeScreen h2 {
+    font-size: 1.2em;
+    color: #003366;
+    line-height: 1.3em;
+    margin-bottom: 10px;
+  }
+
+  #playerNameInput {
+    width: 90%;
+    font-size: 1em;
+    padding: 10px;
+    margin: 10px auto;
+    display: block;
+  }
+
+  #startQuizBtn {
+    display: block;
+    width: 60%;
+    margin: 10px auto;
+    font-size: 1em;
+    padding: 10px;
+    background: #0073aa;
+    color: white;
+    border-radius: 6px;
+    border: none;
+  }
+
+  /* General button consistency */
+  button {
+    font-size: 0.95em;
+    padding: 10px 16px;
+    margin: 8px auto;
+    display: block;
+  }
+
+  /* Progress bar width fix */
+  #progress {
+    margin: 10px auto;
+    width: 90%;
+  }
+
+  /* Ensure Restart button isn’t huge */
+  #restartBtn {
+    width: 60%;
+    margin: 15px auto;
+    display: block;
   }
 }
