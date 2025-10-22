@@ -1,6 +1,6 @@
 // ===============================
 // Southern African Assembly Knowledge Quiz
-// Stable Load + Welcome Screen Fix
+// Stable Load + Single Welcome Screen Fix
 // ===============================
 
 // --- Configuration ---
@@ -28,16 +28,21 @@ const restartBtn = document.getElementById("restartBtn");
 const progressBar = document.getElementById("progressBar");
 const levelTitle = document.getElementById("levelTitle");
 
-// --- Create Welcome Screen dynamically ---
-const welcomeScreen = document.createElement("div");
-welcomeScreen.id = "welcomeScreen";
-welcomeScreen.innerHTML = `
-  <h2>Welcome to the Southern African Assembly Knowledge Quiz</h2>
-  <p>Please enter your name to begin:</p>
-  <input type="text" id="playerNameInput" placeholder="Your full name" />
-  <button id="startQuizBtn">Start Quiz</button>
-`;
-document.getElementById("container").prepend(welcomeScreen);
+// --- Reference existing Welcome Screen (no duplicates) ---
+let welcomeScreen = document.getElementById("welcomeScreen");
+
+// If not present, create dynamically
+if (!welcomeScreen) {
+  welcomeScreen = document.createElement("div");
+  welcomeScreen.id = "welcomeScreen";
+  welcomeScreen.innerHTML = `
+    <h2>Welcome to the Southern African Assembly Knowledge Quiz</h2>
+    <p>Please enter your name to begin:</p>
+    <input type="text" id="playerNameInput" placeholder="Your full name" />
+    <button id="startQuizBtn">Start Quiz</button>
+  `;
+  document.getElementById("container").prepend(welcomeScreen);
+}
 
 // --- Initialize ---
 document.addEventListener("DOMContentLoaded", () => {
@@ -56,17 +61,20 @@ function showWelcomeScreen() {
   resultContainer.classList.add("hidden");
   welcomeScreen.classList.remove("hidden");
 
-  document.getElementById("startQuizBtn").addEventListener("click", () => {
-    const nameInput = document.getElementById("playerNameInput").value.trim();
-    if (nameInput.length < 2) {
-      alert("Please enter your full name to continue.");
-      return;
-    }
-    playerName = nameInput;
-    localStorage.setItem("playerName", playerName);
-    welcomeScreen.classList.add("hidden");
-    startQuiz();
-  });
+  const startBtn = document.getElementById("startQuizBtn");
+  if (startBtn) {
+    startBtn.onclick = () => {
+      const nameInput = document.getElementById("playerNameInput").value.trim();
+      if (nameInput.length < 2) {
+        alert("Please enter your full name to continue.");
+        return;
+      }
+      playerName = nameInput;
+      localStorage.setItem("playerName", playerName);
+      welcomeScreen.classList.add("hidden");
+      startQuiz();
+    };
+  }
 }
 
 // --- Core Game Start ---
