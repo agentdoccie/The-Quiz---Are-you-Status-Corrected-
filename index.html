@@ -1,34 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+
+  <!-- ✅ Fix mobile layout shrink/split issue -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
   <title>Southern African Assembly Knowledge Quiz</title>
 
-  <!-- Styles -->
-  <link rel="stylesheet" href="styles/style.css" />
+  <!-- Link to external CSS -->
+  <link rel="stylesheet" href="styles/style.css">
 
-  <!-- Favicon -->
-  <link rel="icon" href="images/southern-assembly-logo.png" type="image/png" />
+  <!-- Optional favicon -->
+  <link rel="icon" href="images/southern-assembly-logo.png" type="image/png">
 </head>
 
 <body>
   <div id="container">
-    <!-- Header Section -->
+
+    <!-- Official Header -->
     <header id="tsaaHeader">
-      <img src="images/southern-assembly-logo.png" alt="Southern African Assembly Logo" id="tsaaLogo" />
+      <img src="images/southern-assembly-logo.png" alt="Southern African Assembly Logo" id="tsaaLogo">
       <h1>Southern African Assembly Knowledge Quiz</h1>
     </header>
 
-    <!-- Welcome Screen -->
-    <div id="welcomeScreen">
-      <h2>Welcome to the Southern African Assembly Knowledge Quiz</h2>
-      <p>Please enter your name to begin:</p>
-      <input type="text" id="playerNameInput" placeholder="Your full name" />
-      <button id="startQuizBtn">Start Quiz</button>
-    </div>
-
-    <!-- Level Title -->
+    <!-- Dynamic Level Title -->
     <h2 id="levelTitle"></h2>
 
     <!-- Progress Bar -->
@@ -36,28 +32,19 @@
       <div id="progressBar"></div>
     </div>
 
-    <!-- Quiz Content -->
-    <div id="quiz" class="hidden"></div>
+    <!-- Quiz Content Area -->
+    <div id="quiz"></div>
 
     <!-- Control Buttons -->
-    <button id="nextBtn" class="hidden">Next</button>
+    <button id="nextBtn">Next</button>
     <button id="restartBtn" class="hidden">Restart</button>
     <button id="resetAllBtn">Restart Quiz</button>
 
-    <!-- Result Display -->
+    <!-- Results Display -->
     <div id="result" class="hidden"></div>
   </div>
 
-  <!-- Load JS after full page -->
-  <script>
-    // Force a fresh reload of quiz.js every time
-    window.addEventListener("load", () => {
-      const script = document.createElement("script");
-      script.src = "quiz.js?v=" + new Date().getTime();
-      script.defer = true;
-      document.body.appendChild(script);
-    });
-  </script>
+  <!-- JavaScript Logic -->
+  <script src="quiz.js"></script>
 </body>
 </html>
-Fix Start Quiz button — load JS after page load
