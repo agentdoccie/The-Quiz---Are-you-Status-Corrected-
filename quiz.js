@@ -1,119 +1,77 @@
 // ===============================
-//  Southern African Assembly Knowledge Quiz
-//  (Bug-Free Volunteer Modal + Smooth Level Progression)
+// Southern African Assembly Knowledge Quiz
+// Stable Load + Welcome Screen Fix
 // ===============================
 
+// --- Configuration ---
 const PASSING_SCORE = 70;
 const VOLUNTEER_TRIGGER = 80;
-const TOTAL_LEVELS = 5;
+const TOTAL_LEVELS = 100;
+
+// --- State variables ---
 let currentLevel = parseInt(localStorage.getItem("tsaaLevel")) || 1;
-let currentQuestion = parseInt(localStorage.getItem("tsaaQuestion")) || 0;
-let score = parseInt(localStorage.getItem("tsaaScore")) || 0;
+let currentQuestion = 0;
+let score = 0;
 let levelData = [];
 let playerName = localStorage.getItem("playerName") || "";
 
-// --- HTML elements ---
+// --- Elements ---
 const quizContainer = document.getElementById("quiz");
 const nextBtn = document.getElementById("nextBtn");
 const resultContainer = document.getElementById("result");
 const restartBtn = document.getElementById("restartBtn");
 const progressBar = document.getElementById("progressBar");
 const levelTitle = document.getElementById("levelTitle");
-const resetAllBtn = document.getElementById("resetAllBtn");
-const progressDiv = document.getElementById("progress");
 
-// --- Header + Tracker ---
-const playerWelcome = document.getElementById("playerWelcome");
-const progressTracker = document.getElementById("progressTracker");
+// Create Welcome Screen dynamically
+const welcomeScreen = document.createElement("div");
+welcomeScreen.id = "welcomeScreen";
+welcomeScreen.innerHTML = `
+  <h2>Welcome to the Southern African Assembly Knowledge Quiz</h2>
+  <p>Please enter your name to begin:</p>
+  <input type="text" id="playerNameInput" placeholder="Your full name" />
+  <button id="startQuizBtn">Start Quiz</button>
+`;
+document.getElementById("container").prepend(welcomeScreen);
 
-// --- Welcome screens ---
-const welcomeScreen = document.getElementById("welcomeScreen");
-const playerNameInput = document.getElementById("playerNameInput");
-const startQuizBtn = document.getElementById("startQuizBtn");
-const welcomeBackScreen = document.getElementById("welcomeBackScreen");
-const returningName = document.getElementById("returningName");
-const continueBtn = document.getElementById("continueBtn");
-const restartFromBeginningBtn = document.getElementById("restartFromBeginningBtn");
-
-// --- Create Save & Exit button dynamically ---
-const saveExitBtn = document.createElement("button");
-saveExitBtn.id = "saveExitBtn";
-saveExitBtn.textContent = "Save & Exit";
-Object.assign(saveExitBtn.style, {
-  background: "#ff9933",
-  color: "white",
-  border: "none",
-  borderRadius: "6px",
-  padding: "10px 24px",
-  cursor: "pointer",
-  margin: "15px 5px 0 5px",
-  transition: "background 0.3s ease"
-});
-saveExitBtn.addEventListener("mouseover", () => (saveExitBtn.style.background = "#e68a00"));
-saveExitBtn.addEventListener("mouseout", () => (saveExitBtn.style.background = "#ff9933"));
-saveExitBtn.addEventListener("click", saveAndExit);
-
-// --- Handle returning players ---
+// --- Initialize ---
 document.addEventListener("DOMContentLoaded", () => {
-  if (playerName) {
-    returningName.textContent = playerName;
-    welcomeBackScreen.classList.remove("hidden");
+  if (!playerName) {
+    showWelcomeScreen();
   } else {
-    welcomeScreen.classList.remove("hidden");
+    startQuiz();
   }
 });
 
-// --- New player starts quiz ---
-startQuizBtn.addEventListener("click", () => {
-  const name = playerNameInput.value.trim();
-  if (name.length < 2) {
-    alert("Please enter your full name to continue.");
-    return;
-  }
+// --- Welcome Screen Logic ---
+function showWelcomeScreen() {
+  quizContainer.classList.add("hidden");
+  nextBtn.classList.add("hidden");
+  restartBtn.classList.add("hidden");
+  resultContainer.classList.add("hidden");
+  welcomeScreen.classList.remove("hidden");
 
-  playerName = name;
-  localStorage.setItem("playerName", playerName);
-  welcomeScreen.classList.add("hidden");
-  startQuiz();
-});
-
-// --- Returning player continues ---
-continueBtn.addEventListener("click", () => {
-  welcomeBackScreen.classList.add("hidden");
-  startQuiz(true);
-});
-
-// --- Returning player restarts ---
-restartFromBeginningBtn.addEventListener("click", () => {
-  if (confirm("Are you sure you want to start over from Level 1?")) {
-    localStorage.clear();
-    currentLevel = 1;
-    currentQuestion = 0;
-    score = 0;
-    location.reload();
-  }
-});
-
-// --- Start quiz ---
-function startQuiz(resume = false) {
-  playerWelcome.textContent = `Welcome, ${playerName}!`;
-  playerWelcome.classList.remove("hidden");
-  updateProgressTracker();
-
-  levelTitle.classList.remove("hidden");
-  quizContainer.classList.remove("hidden");
-  progressDiv.classList.remove("hidden");
-  nextBtn.classList.remove("hidden");
-
-  if (!document.getElementById("saveExitBtn")) {
-    nextBtn.insertAdjacentElement("afterend", saveExitBtn);
-  }
-
-  loadLevel(currentLevel, resume);
+  document.getElementById("startQuizBtn").addEventListener("click", () => {
+    const nameInput = document.getElementById("playerNameInput").value.trim();
+    if (nameInput.length < 2) {
+      alert("Please enter your full name to continue.");
+      return;
+    }
+    playerName = nameInput;
+    localStorage.setItem("playerName", playerName);
+    welcomeScreen.classList.add("hidden");
+    startQuiz();
+  });
 }
 
-// --- Load a level ---
-function loadLevel(level, resume = false) {
+// --- Core Game Start ---
+function startQuiz() {
+  quizContainer.classList.remove("hidden");
+  loadLevel(currentLevel);
+}
+
+// --- Load Level Data ---
+function loadLevel(level) {
   quizContainer.innerHTML = "";
   resultContainer.classList.add("hidden");
   restartBtn.classList.add("hidden");
@@ -127,44 +85,34 @@ function loadLevel(level, resume = false) {
     })
     .then(data => {
       levelData = data.questions;
-      const savedSelections = JSON.parse(localStorage.getItem(`tsaaSelections_level${level}`)) || [];
-      levelData.forEach((q, i) => (q.selected = savedSelections[i] !== undefined ? savedSelections[i] : null));
-
+      currentQuestion = 0;
+      score = 0;
       levelTitle.innerHTML = `Level ${data.level}: ${data.title}`;
 
-      if (data.summary && !resume) {
+      if (data.summary) {
         quizContainer.innerHTML = `
           <div class="summary-card">
-            <h3>Hello ${playerName} 👋</h3>
+            <h3>Level Overview</h3>
             <p>${data.summary}</p>
             <button id="startLevelBtn">Start Level ${data.level}</button>
           </div>
         `;
-        nextBtn.classList.add("hidden");
-        saveExitBtn.classList.add("hidden");
         document.getElementById("startLevelBtn").addEventListener("click", () => {
-          currentQuestion = 0;
           loadQuestion();
           nextBtn.classList.remove("hidden");
-          saveExitBtn.classList.remove("hidden");
         });
-        return;
+      } else {
+        loadQuestion();
+        nextBtn.classList.remove("hidden");
       }
-
-      loadQuestion(resume);
-      nextBtn.classList.remove("hidden");
-      saveExitBtn.classList.remove("hidden");
     })
     .catch(err => {
-      quizContainer.innerHTML = `
-        <p style="color:#b22222;">⚠️ Could not load Level ${level}.<br>
-        Please ensure the file <strong>questions/level${level}.json</strong> exists.</p>
-      `;
-      console.error("Error loading level:", err);
+      quizContainer.innerHTML = `<p>⚠️ Could not load Level ${level}. Please ensure the file <strong>questions/level${level}.json</strong> exists.</p>`;
+      console.error(err);
     });
 }
 
-// --- Load a question ---
+// --- Display Questions ---
 function loadQuestion() {
   const q = levelData[currentQuestion];
   progressBar.style.width = `${(currentQuestion / levelData.length) * 100}%`;
@@ -180,160 +128,98 @@ function loadQuestion() {
     const btn = document.createElement("button");
     btn.textContent = option;
     btn.classList.add("option");
-
-    if (q.selected === i) btn.style.background = "#c5f2cc";
-
     btn.addEventListener("click", () => selectAnswer(i, btn));
     quizContainer.appendChild(btn);
   });
 
   nextBtn.disabled = true;
-  if (q.selected !== null && q.selected !== undefined) nextBtn.disabled = false;
 }
 
-// --- Select answer ---
+// --- Handle Answer Selection ---
 function selectAnswer(index, btn) {
   levelData[currentQuestion].selected = index;
   nextBtn.disabled = false;
   document.querySelectorAll(".option").forEach(opt => (opt.style.background = "#fff"));
   btn.style.background = "#c5f2cc";
-  saveProgress();
 }
 
-// --- Save progress ---
-function saveProgress() {
-  localStorage.setItem("tsaaLevel", currentLevel);
-  localStorage.setItem("tsaaQuestion", currentQuestion);
-  localStorage.setItem("tsaaScore", score);
+// --- Next Question / Level Progression ---
+nextBtn.addEventListener("click", () => {
+  const current = levelData[currentQuestion];
+  if (current.selected === current.correctIndex) score++;
+  currentQuestion++;
 
-  const selections = levelData.map(q => q.selected);
-  localStorage.setItem(`tsaaSelections_level${currentLevel}`, JSON.stringify(selections));
-}
+  if (currentQuestion < levelData.length) loadQuestion();
+  else finishLevel();
+});
 
-// --- Finish level ---
+// --- Level Completion ---
 function finishLevel() {
   progressBar.style.width = "100%";
-  const totalQuestions = levelData.length;
-  const percent = (score / totalQuestions) * 100;
+  const total = levelData.length;
+  const percent = (score / total) * 100;
 
+  quizContainer.classList.add("hidden");
+  nextBtn.classList.add("hidden");
+  resultContainer.classList.remove("hidden");
+  restartBtn.classList.remove("hidden");
+
+  let color = percent >= PASSING_SCORE ? "#d8f7d3" : "#f9d3d3";
+  resultContainer.style.background = color;
+
+  let feedback =
+    percent >= 90
+      ? "🌟 Excellent! You’ve mastered this level."
+      : percent >= 70
+      ? "✅ Great job! You passed and built strong understanding."
+      : "⚠️ Keep going! Try again for a higher score.";
+
+  resultContainer.innerHTML = `
+    <h2>Level ${currentLevel} Complete</h2>
+    <p>Well done, ${playerName}!</p>
+    <h3>Your Score: ${score}/${total} (${Math.round(percent)}%)</h3>
+    <p>${feedback}</p>
+  `;
+
+  // --- Volunteer Popup if 80%+ ---
+  if (percent >= VOLUNTEER_TRIGGER) {
+    setTimeout(() => {
+      if (confirm("Wow you really understand all this! Have you thought about being a volunteer for the Assembly?")) {
+        window.open("https://thesouthafricanassembly.org/contact-us/", "_blank");
+      } else {
+        alert("👍 Maybe in the future! Let's hammer on and see what else you know!");
+      }
+    }, 300);
+  }
+
+  // Save score
   let tsaaScores = JSON.parse(localStorage.getItem("tsaaScores")) || {};
   tsaaScores[`level${currentLevel}`] = percent;
   localStorage.setItem("tsaaScores", JSON.stringify(tsaaScores));
 
-  quizContainer.classList.add("hidden");
-  nextBtn.classList.add("hidden");
-  restartBtn.classList.remove("hidden");
-  resultContainer.classList.remove("hidden");
-  saveExitBtn.classList.add("hidden");
-
-  resultContainer.innerHTML = `
-    <h2>Level ${currentLevel} Complete</h2>
-    <h3>Your Score: ${score} / ${totalQuestions} (${Math.round(percent)}%)</h3>
-  `;
-
-  updateProgressTracker();
-
-  // Always show Next Level button (prevent freeze)
-  insertNextLevelButton();
-
-  // Show volunteer modal if eligible
-  if (percent >= VOLUNTEER_TRIGGER) {
-    setTimeout(() => showVolunteerModal(), 300);
-  }
-
-  localStorage.removeItem("tsaaQuestion");
-  localStorage.removeItem(`tsaaSelections_level${currentLevel}`);
-}
-
-// --- Create Next Level button ---
-function insertNextLevelButton() {
-  if (document.getElementById("nextLevelBtn")) return;
-
-  resultContainer.innerHTML += `
-    <hr>
-    <button id="nextLevelBtn">Next Level</button>
-  `;
-  document.getElementById("nextLevelBtn").addEventListener("click", () => {
-    currentLevel++;
-    currentQuestion = 0;
-    score = 0;
-    saveProgress();
-    loadLevel(currentLevel);
-  });
-}
-
-// --- Volunteer Modal ---
-function showVolunteerModal() {
-  const modal = document.createElement("div");
-  modal.id = "volunteerModal";
-  Object.assign(modal.style, {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    width: "100%",
-    height: "100%",
-    background: "rgba(0,0,0,0.6)",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    zIndex: 9999
-  });
-
-  modal.innerHTML = `
-    <div style="background:white; border-radius:12px; padding:25px; width:90%; max-width:420px; text-align:center; box-shadow:0 4px 20px rgba(0,0,0,0.2); animation:fadeIn 0.4s ease;">
-      <img src="images/southern-assembly-logo.png" alt="Southern African Assembly Logo" style="width:70px; height:auto; margin-bottom:10px;">
-      <h3 style="color:#0073aa;">🎉 Wow, ${playerName}!</h3>
-      <p>You really understand all this.<br>Have you thought about being a volunteer for the Assembly?</p>
-      <div style="margin-top:15px;">
-        <button id="yesVolunteer" style="background:#0073aa; color:white; border:none; border-radius:6px; padding:10px 16px; margin:5px; cursor:pointer;">Yes, I'd like to help</button>
-        <button id="noVolunteer" style="background:#ccc; color:#333; border:none; border-radius:6px; padding:10px 16px; margin:5px; cursor:pointer;">No thanks</button>
-      </div>
-    </div>
-  `;
-
-  document.body.appendChild(modal);
-
-  document.getElementById("yesVolunteer").addEventListener("click", () => {
-    window.open("https://thesouthafricanassembly.org/contact-us/", "_blank");
-    closeModal();
-  });
-
-  document.getElementById("noVolunteer").addEventListener("click", () => {
-    modal.querySelector("div").innerHTML = `
-      <h3 style="color:#0073aa;">👍 Maybe in the future!</h3>
-      <p>Let's hammer on and see what else you know! 😄</p>
-      <button id="closeModal" style="background:#0073aa; color:white; border:none; border-radius:6px; padding:8px 14px; margin-top:10px; cursor:pointer;">Continue</button>
-    `;
-    document.getElementById("closeModal").addEventListener("click", closeModal);
-  });
-
-  function closeModal() {
-    modal.remove();
+  // Continue or restart
+  if (percent >= PASSING_SCORE && currentLevel < TOTAL_LEVELS) {
+    resultContainer.innerHTML += `<button id="nextLevelBtn">Next Level</button>`;
+    document.getElementById("nextLevelBtn").addEventListener("click", () => {
+      currentLevel++;
+      localStorage.setItem("tsaaLevel", currentLevel);
+      loadLevel(currentLevel);
+    });
   }
 }
 
-// --- Restart level ---
+// --- Restart Level ---
 restartBtn.addEventListener("click", () => {
-  currentQuestion = 0;
-  score = 0;
-  saveProgress();
   loadLevel(currentLevel);
 });
 
-// --- Reset quiz ---
+// --- Full Reset ---
+const resetAllBtn = document.getElementById("resetAllBtn");
 resetAllBtn.addEventListener("click", () => {
-  if (confirm("Are you sure you want to restart the entire quiz from Level 1?")) {
+  if (confirm("Are you sure you want to restart from Level 1?")) {
     localStorage.clear();
     currentLevel = 1;
     currentQuestion = 0;
-    score = 0;
-    location.reload();
+    showWelcomeScreen();
   }
 });
-
-// --- Progress tracker ---
-function updateProgressTracker() {
-  const completion = ((currentLevel - 1) / TOTAL_LEVELS) * 100;
-  progressTracker.textContent = `🧭 Level ${currentLevel} of ${TOTAL_LEVELS} — ${Math.round(completion)}% Complete`;
-  progressTracker.classList.remove("hidden");
-}
