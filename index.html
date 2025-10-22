@@ -3,22 +3,24 @@
 <head>
   <meta charset="UTF-8">
 
-  <!-- ✅ Fix mobile layout shrink/split issue -->
+  <!-- ✅ Ensures mobile screens display full width -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
   <title>Southern African Assembly Knowledge Quiz</title>
 
-  <!-- Link to external CSS -->
+  <!-- Link to your external CSS -->
   <link rel="stylesheet" href="styles/style.css">
 
-  <!-- Optional favicon -->
+  <!-- Optional Favicon -->
   <link rel="icon" href="images/southern-assembly-logo.png" type="image/png">
 </head>
 
 <body>
   <div id="container">
 
-    <!-- Official Header -->
+    <!-- ===============================
+         Official Southern African Assembly Header
+         =============================== -->
     <header id="tsaaHeader">
       <img src="images/southern-assembly-logo.png" alt="Southern African Assembly Logo" id="tsaaLogo">
       <h1>Southern African Assembly Knowledge Quiz</h1>
@@ -32,15 +34,14 @@
       <div id="progressBar"></div>
     </div>
 
-    <!-- Quiz Content Area -->
+    <!-- Quiz Section -->
     <div id="quiz"></div>
 
     <!-- Control Buttons -->
     <button id="nextBtn">Next</button>
-    <button id="restartBtn" class="hidden">Restart</button>
     <button id="resetAllBtn">Restart Quiz</button>
 
-    <!-- Results Display -->
+    <!-- Result Section -->
     <div id="result" class="hidden"></div>
   </div>
 
