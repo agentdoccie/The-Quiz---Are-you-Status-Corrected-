@@ -5,67 +5,66 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Southern African Assembly Knowledge Quiz</title>
 
-  <!-- Link to external CSS file -->
+  <!-- Link to external CSS -->
   <link rel="stylesheet" href="styles/style.css">
 
-  <!-- Optional Favicon -->
+  <!-- Favicon -->
   <link rel="icon" href="images/southern-assembly-logo.png" type="image/png">
 </head>
 
 <body>
   <div id="container">
 
-    <!-- Header Section -->
+    <!-- ===== Header ===== -->
     <header id="tsaaHeader">
       <img src="images/southern-assembly-logo.png" alt="Southern African Assembly Logo" id="tsaaLogo">
-      <h1>
-        Southern African Assembly Knowledge Quiz
-        <br>
-        <span id="playerWelcome" class="welcome-text hidden"></span>
-        <span id="progressTracker" class="progress-text hidden"></span>
-      </h1>
+      <h1>Southern African Assembly Knowledge Quiz</h1>
     </header>
 
-    <!-- Dynamic Level Title -->
-    <h2 id="levelTitle" class="hidden"></h2>
-
-    <!-- Progress Bar -->
-    <div id="progress" class="hidden">
-      <div id="progressBar"></div>
-    </div>
-
-    <!-- Welcome Screen (New Player) -->
+    <!-- ===== Welcome Screen (new players) ===== -->
     <div id="welcomeScreen" class="hidden">
-      <h2>Welcome to the Southern African Assembly Knowledge Quiz</h2>
-      <p>Please enter your name to begin your learning journey.</p>
-      <input type="text" id="playerNameInput" placeholder="Enter your full name" maxlength="40">
+      <h2>Welcome!</h2>
+      <p>Please enter your name to begin the journey.</p>
+      <input type="text" id="playerNameInput" placeholder="Enter your full name">
+      <br>
       <button id="startQuizBtn">Start Quiz</button>
     </div>
 
-    <!-- Welcome Back Screen (Returning Player) -->
+    <!-- ===== Welcome Back Screen (returning players) ===== -->
     <div id="welcomeBackScreen" class="hidden">
-      <h2>Welcome Back, <span id="returningName"></span> 👋</h2>
-      <p>Would you like to continue where you left off or start over?</p>
+      <h2>Welcome back, <span id="returningName"></span> 👋</h2>
+      <p>You can pick up right where you left off or start over from the beginning.</p>
       <button id="continueBtn">Continue</button>
       <button id="restartFromBeginningBtn">Start Over</button>
     </div>
 
-    <!-- Quiz Content -->
-    <div id="quiz" class="hidden"></div>
+    <!-- ===== Player Greeting ===== -->
+    <h3 id="playerWelcome" class="hidden"></h3>
 
-    <!-- Control Buttons -->
-    <div id="controls">
-      <button id="nextBtn" class="hidden">Next</button>
-      <button id="restartBtn" class="hidden">Restart Level</button>
-      <button id="resetAllBtn" class="hidden">Restart Quiz</button>
+    <!-- ===== Progress Tracker ===== -->
+    <p id="progressTracker" class="hidden"></p>
+
+    <!-- ===== Dynamic Level Title ===== -->
+    <h2 id="levelTitle" class="hidden"></h2>
+
+    <!-- ===== Progress Bar ===== -->
+    <div id="progress" class="hidden">
+      <div id="progressBar"></div>
     </div>
 
-    <!-- Results Section -->
-    <div id="result" class="hidden"></div>
+    <!-- ===== Quiz Area ===== -->
+    <div id="quiz" class="hidden"></div>
 
+    <!-- ===== Control Buttons ===== -->
+    <button id="nextBtn" class="hidden">Next</button>
+    <button id="restartBtn" class="hidden">Restart Level</button>
+    <button id="resetAllBtn" class="hidden">Restart Quiz</button>
+
+    <!-- ===== Results Section ===== -->
+    <div id="result" class="hidden"></div>
   </div>
 
-  <!-- JavaScript Quiz Logic -->
+  <!-- Link to JS -->
   <script src="scripts/quiz.js"></script>
 </body>
 </html>
