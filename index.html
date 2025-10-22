@@ -2,20 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-
-  <!-- ✅ Viewport Fix: Forces full-width, full-height scaling -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
   <title>Southern African Assembly Knowledge Quiz</title>
 
-  <!-- Link to external CSS -->
   <link rel="stylesheet" href="styles/style.css">
-
-  <!-- Optional Favicon -->
   <link rel="icon" href="images/southern-assembly-logo.png" type="image/png">
 
   <style>
-    /* Extra mobile safety fix for cutoff issue */
     html, body {
       height: 100%;
       min-height: 100vh;
@@ -24,9 +18,9 @@
       padding: 0;
       overflow-x: hidden;
       background-color: #f5f9fc;
+      -webkit-text-size-adjust: 100%;
     }
 
-    /* Force the main quiz container to always center on screen */
     #container {
       max-width: 720px;
       width: 92%;
@@ -42,7 +36,6 @@
       min-height: calc(100vh - 40px);
     }
 
-    /* Mobile adjustments: ensure no horizontal scroll or cutoff */
     @media (max-width: 768px) {
       body {
         overflow-x: hidden !important;
@@ -56,6 +49,20 @@
         border-radius: 10px;
         min-height: calc(100vh - 20px);
       }
+
+      #startQuizBtn {
+        background-color: #0073aa;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        padding: 10px 16px;
+        margin-top: 10px;
+        font-size: 1em;
+      }
+
+      #startQuizBtn:hover {
+        background-color: #005f87;
+      }
     }
   </style>
 </head>
@@ -63,15 +70,13 @@
 <body>
   <div id="container">
 
-    <!-- ===============================
-         Official Southern African Assembly Header
-         =============================== -->
+    <!-- Header -->
     <header id="tsaaHeader">
       <img src="images/southern-assembly-logo.png" alt="Southern African Assembly Logo" id="tsaaLogo">
       <h1>Southern African Assembly Knowledge Quiz</h1>
     </header>
 
-    <!-- Dynamic Level Title -->
+    <!-- Level Title -->
     <h2 id="levelTitle"></h2>
 
     <!-- Progress Bar -->
@@ -79,18 +84,25 @@
       <div id="progressBar"></div>
     </div>
 
-    <!-- Quiz Section -->
+    <!-- Quiz Content -->
     <div id="quiz"></div>
 
-    <!-- Control Buttons -->
+    <!-- Buttons -->
     <button id="nextBtn">Next</button>
     <button id="resetAllBtn">Restart Quiz</button>
 
-    <!-- Result Section -->
+    <!-- Results -->
     <div id="result" class="hidden"></div>
   </div>
 
-  <!-- JS Logic -->
-  <script src="quiz.js"></script>
+  <!-- JavaScript -->
+  <script>
+    // ✅ Mobile-safe Start Quiz Event Fix
+    document.addEventListener("DOMContentLoaded", () => {
+      // Force focus-safe tap activation on mobile
+      document.body.addEventListener("touchstart", () => {}, {passive: true});
+    });
+  </script>
+  <script src="quiz.js" defer></script>
 </body>
 </html>
