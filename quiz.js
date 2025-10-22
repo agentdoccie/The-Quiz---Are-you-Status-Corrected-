@@ -8,6 +8,11 @@ const PASSING_SCORE = 70;
 const VOLUNTEER_TRIGGER = 80;
 const TOTAL_LEVELS = 100;
 
+// --- Universal base path for GitHub Pages ---
+const basePath = window.location.pathname.includes("The-Quiz---Are-you-Status-Corrected-")
+  ? "/The-Quiz---Are-you-Status-Corrected-/"
+  : "/";
+
 // --- State variables ---
 let currentLevel = parseInt(localStorage.getItem("tsaaLevel")) || 1;
 let currentQuestion = 0;
@@ -23,7 +28,7 @@ const restartBtn = document.getElementById("restartBtn");
 const progressBar = document.getElementById("progressBar");
 const levelTitle = document.getElementById("levelTitle");
 
-// Create Welcome Screen dynamically
+// --- Create Welcome Screen dynamically ---
 const welcomeScreen = document.createElement("div");
 welcomeScreen.id = "welcomeScreen";
 welcomeScreen.innerHTML = `
@@ -70,24 +75,28 @@ function startQuiz() {
   loadLevel(currentLevel);
 }
 
-// --- Load Level Data ---
+// --- Load a specific level (robust for GitHub Pages) ---
 function loadLevel(level) {
-  quizContainer.innerHTML = "";
+  quizContainer.classList.remove("hidden");
   resultContainer.classList.add("hidden");
   restartBtn.classList.add("hidden");
   nextBtn.classList.add("hidden");
   progressBar.style.width = "0%";
+  quizContainer.innerHTML = "";
 
-  fetch(`questions/level${level}.json`)
+  fetch(`${basePath}questions/level${level}.json`)
     .then(res => {
       if (!res.ok) throw new Error(`Level ${level} file not found`);
       return res.json();
     })
     .then(data => {
-      levelData = data.questions;
+      levelData = data.questions || [];
       currentQuestion = 0;
       score = 0;
-      levelTitle.innerHTML = `Level ${data.level}: ${data.title}`;
+
+      if (levelTitle) {
+        levelTitle.innerHTML = `Level ${data.level}: ${data.title || ""}`;
+      }
 
       if (data.summary) {
         quizContainer.innerHTML = `
@@ -97,18 +106,29 @@ function loadLevel(level) {
             <button id="startLevelBtn">Start Level ${data.level}</button>
           </div>
         `;
-        document.getElementById("startLevelBtn").addEventListener("click", () => {
-          loadQuestion();
-          nextBtn.classList.remove("hidden");
-        });
-      } else {
-        loadQuestion();
-        nextBtn.classList.remove("hidden");
+        nextBtn.classList.add("hidden");
+        const startBtn = document.getElementById("startLevelBtn");
+        if (startBtn) {
+          startBtn.addEventListener("click", () => {
+            nextBtn.classList.remove("hidden");
+            loadQuestion();
+          });
+        }
+        return;
       }
+
+      loadQuestion();
+      nextBtn.classList.remove("hidden");
     })
     .catch(err => {
-      quizContainer.innerHTML = `<p>⚠️ Could not load Level ${level}. Please ensure the file <strong>questions/level${level}.json</strong> exists.</p>`;
-      console.error(err);
+      console.error("Error loading level:", err);
+      quizContainer.innerHTML = `
+        <p style="color:#b22222;">⚠️ Could not load Level ${level}.<br>
+        Please ensure the file <strong>questions/level${level}.json</strong> exists.</p>
+      `;
+      nextBtn.classList.add("hidden");
+      resultContainer.classList.add("hidden");
+      restartBtn.classList.remove("hidden");
     });
 }
 
@@ -181,7 +201,7 @@ function finishLevel() {
     <p>${feedback}</p>
   `;
 
-  // --- Volunteer Popup if 80%+ ---
+  // Volunteer popup
   if (percent >= VOLUNTEER_TRIGGER) {
     setTimeout(() => {
       if (confirm("Wow you really understand all this! Have you thought about being a volunteer for the Assembly?")) {
@@ -197,7 +217,7 @@ function finishLevel() {
   tsaaScores[`level${currentLevel}`] = percent;
   localStorage.setItem("tsaaScores", JSON.stringify(tsaaScores));
 
-  // Continue or restart
+  // Next level button
   if (percent >= PASSING_SCORE && currentLevel < TOTAL_LEVELS) {
     resultContainer.innerHTML += `<button id="nextLevelBtn">Next Level</button>`;
     document.getElementById("nextLevelBtn").addEventListener("click", () => {
@@ -213,13 +233,15 @@ restartBtn.addEventListener("click", () => {
   loadLevel(currentLevel);
 });
 
-// --- Full Reset ---
+// --- Full Reset (Safe Mode) ---
 const resetAllBtn = document.getElementById("resetAllBtn");
-resetAllBtn.addEventListener("click", () => {
-  if (confirm("Are you sure you want to restart from Level 1?")) {
-    localStorage.clear();
-    currentLevel = 1;
-    currentQuestion = 0;
-    showWelcomeScreen();
-  }
-});
+if (resetAllBtn) {
+  resetAllBtn.addEventListener("click", () => {
+    if (confirm("Are you sure you want to restart from Level 1?")) {
+      localStorage.clear();
+      currentLevel = 1;
+      currentQuestion = 0;
+      showWelcomeScreen();
+    }
+  });
+}
