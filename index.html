@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Southern African Assembly Knowledge Quiz</title>
 
-  <!-- Stylesheet -->
+  <!-- Styles -->
   <link rel="stylesheet" href="styles/style.css" />
 
   <!-- Favicon -->
@@ -20,38 +20,44 @@
       <h1>Southern African Assembly Knowledge Quiz</h1>
     </header>
 
-    <!-- Welcome / Player Name Screen -->
-    <div id="welcomeScreen" class="hidden">
+    <!-- Welcome Screen -->
+    <div id="welcomeScreen">
       <h2>Welcome to the Southern African Assembly Knowledge Quiz</h2>
       <p>Please enter your name to begin:</p>
       <input type="text" id="playerNameInput" placeholder="Your full name" />
       <button id="startQuizBtn">Start Quiz</button>
     </div>
 
-    <!-- Progress -->
+    <!-- Level Title -->
+    <h2 id="levelTitle"></h2>
+
+    <!-- Progress Bar -->
     <div id="progress">
       <div id="progressBar"></div>
     </div>
 
     <!-- Quiz Content -->
-    <div id="quiz"></div>
+    <div id="quiz" class="hidden"></div>
 
     <!-- Control Buttons -->
-    <button id="nextBtn">Next</button>
+    <button id="nextBtn" class="hidden">Next</button>
     <button id="restartBtn" class="hidden">Restart</button>
     <button id="resetAllBtn">Restart Quiz</button>
 
-    <!-- Result Section -->
+    <!-- Result Display -->
     <div id="result" class="hidden"></div>
   </div>
 
-    <!-- JavaScript Logic -->
+  <!-- Load JS after full page -->
   <script>
-    // Force GitHub Pages to load JS properly
-    const script = document.createElement("script");
-    script.src = "quiz.js?v=" + new Date().getTime(); // adds timestamp to bypass cache
-    script.defer = true;
-    document.body.appendChild(script);
+    // Force a fresh reload of quiz.js every time
+    window.addEventListener("load", () => {
+      const script = document.createElement("script");
+      script.src = "quiz.js?v=" + new Date().getTime();
+      script.defer = true;
+      document.body.appendChild(script);
+    });
   </script>
 </body>
 </html>
+Fix Start Quiz button — load JS after page load
